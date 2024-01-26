@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://q0a51iybijua"]
+
+[ext_resource type="Script" path="res://scenes/platform_tile.gd" id="1_gc5ne"]
+[ext_resource type="Texture2D" uid="uid://nri5rrjxmxus" path="res://images/tileset.png" id="2_aeuao"]
+
+[node name="PlatformTile" type="Node2D"]
+script = ExtResource("1_gc5ne")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_aeuao")
+region_enabled = true
+region_rect = Rect2(229, 23.5, 98, 97)
