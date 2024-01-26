@@ -14,6 +14,9 @@ position = Vector2(328, -14)
 [node name="Background" parent="PlayerView2" index="0"]
 texture = ExtResource("2_3fxt5")
 
+[node name="PlayerNameLabel" parent="PlayerView2" index="3"]
+text = "Player 2"
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(4, -14)
 zoom = Vector2(0.655, 0.655)
