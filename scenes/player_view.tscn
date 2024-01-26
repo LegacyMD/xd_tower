@@ -1,17 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0df40lhsahqm"]
+[gd_scene load_steps=4 format=3 uid="uid://c0df40lhsahqm"]
 
 [ext_resource type="Texture2D" uid="uid://k56ue13rongu" path="res://images/bg1.png" id="1_g4c12"]
-[ext_resource type="Script" path="res://scripts/player_view.gd" id="1_hn4cx"]
 [ext_resource type="PackedScene" uid="uid://cmsiiqo6trr02" path="res://scenes/player.tscn" id="1_wpenj"]
-[ext_resource type="FontFile" uid="uid://1a64xqtvvu7t" path="res://fonts/COMIC.TTF" id="3_3bjkn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d1cn2"]
 size = Vector2(964.211, 176.711)
 
-[sub_resource type="Theme" id="Theme_0slj3"]
-
 [node name="PlayerView" type="Node2D"]
-script = ExtResource("1_hn4cx")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(2, 3)
@@ -30,26 +25,6 @@ collision_layer = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0.0377138, 65.5922)
 shape = SubResource("RectangleShape2D_d1cn2")
-
-[node name="player_name_label" type="Label" parent="."]
-offset_left = -269.0
-offset_top = -306.0
-offset_right = -125.0
-offset_bottom = -249.0
-theme = SubResource("Theme_0slj3")
-theme_override_fonts/font = ExtResource("3_3bjkn")
-theme_override_font_sizes/font_size = 40
-text = "Player 1"
-
-[node name="score_label" type="Label" parent="."]
-offset_left = 105.0
-offset_top = -300.0
-offset_right = 271.0
-offset_bottom = -243.0
-theme_override_fonts/font = ExtResource("3_3bjkn")
-theme_override_font_sizes/font_size = 40
-text = "100"
-horizontal_alignment = 2
 
 [connection signal="area_entered" from="Area2D" to="Player" method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="Player" method="_on_area_2d_body_entered"]
