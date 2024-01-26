@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fvmdj"]
 size = Vector2(60, 66)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="RigidBody2D"]
 collision_mask = 6
 script = ExtResource("1_vu3yy")
 

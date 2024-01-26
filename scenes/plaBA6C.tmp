@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0df40lhsahqm"]
+
+[ext_resource type="Texture2D" uid="uid://k56ue13rongu" path="res://images/bg1.png" id="1_g4c12"]
+[ext_resource type="PackedScene" uid="uid://cmsiiqo6trr02" path="res://scenes/player.tscn" id="1_wpenj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d1cn2"]
+size = Vector2(964.211, 176.711)
+
+[node name="PlayerView" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(2, 3)
+scale = Vector2(0.591111, 0.591111)
+texture = ExtResource("1_g4c12")
+
+[node name="Player" parent="." instance=ExtResource("1_wpenj")]
+collision_layer = 7
+collision_mask = 7
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(1.99994, 337)
+scale = Vector2(0.591111, 0.591111)
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.0377138, 65.5922)
+shape = SubResource("RectangleShape2D_d1cn2")
+
+[connection signal="area_entered" from="Area2D" to="Player" method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="Player" method="_on_area_2d_body_entered"]
+[connection signal="tree_entered" from="Area2D/CollisionShape2D" to="Player" method="_on_collision_shape_2d_tree_entered"]
