@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://be1m1bli4kvxx"]
+[gd_scene load_steps=4 format=3 uid="uid://be1m1bli4kvxx"]
 
 [ext_resource type="PackedScene" uid="uid://c0df40lhsahqm" path="res://scenes/player_view.tscn" id="1_mew4d"]
 [ext_resource type="Texture2D" uid="uid://bnhppr88odaml" path="res://images/bg2.png" id="2_3fxt5"]
+[ext_resource type="PackedScene" uid="uid://dhnwcp01tc7x1" path="res://scenes/platform_spawner.tscn" id="3_ny1kp"]
 
 [node name="RootNode" type="Node2D"]
 
@@ -21,4 +22,7 @@ text = "Player 2"
 position = Vector2(4, -14)
 zoom = Vector2(0.655, 0.655)
 
+[node name="PlatformSpawner" parent="." instance=ExtResource("3_ny1kp")]
+
+[editable path="PlayerView"]
 [editable path="PlayerView2"]
