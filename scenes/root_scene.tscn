@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://be1m1bli4kvxx"]
+
+[ext_resource type="PackedScene" uid="uid://c0df40lhsahqm" path="res://scenes/player_view.tscn" id="1_mew4d"]
+[ext_resource type="Texture2D" uid="uid://bnhppr88odaml" path="res://images/bg2.png" id="2_3fxt5"]
+
+[node name="RootNode" type="Node2D"]
+
+[node name="PlayerView" parent="." instance=ExtResource("1_mew4d")]
+position = Vector2(-276, -14)
+
+[node name="PlayerView2" parent="." instance=ExtResource("1_mew4d")]
+position = Vector2(328, -14)
+
+[node name="Background" parent="PlayerView2" index="0"]
+texture = ExtResource("2_3fxt5")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(4, -14)
+zoom = Vector2(0.655, 0.655)
+
+[editable path="PlayerView2"]
