@@ -36,10 +36,31 @@ func _fill_starting_platform_tiles(root, tile, tile_size, row, tiles_in_a_row, p
         var instance = _create_tile(tile, c, row, tile_size, player_view_rect)
         root.add_child.call_deferred(instance)
 
+# Function to generate a sample from an approximate normal distribution
+func normal_distribution(mean: float, standard_deviation: float) -> float:
+    # Sum 12 random values to approximate a normal distribution
+    var sum = 0.0
+    for i in range(12):
+        sum += randf()
+
+    # Adjust the sum to have the desired mean and standard deviation
+    var result = mean + standard_deviation * (sum - 6.0)
+    return result
+
 func _generate_platform_size_and_offset(tiles_in_a_row):
-    var platform_length = max(randi() % tiles_in_a_row, Settings.MIN_ROW_LENGTH)
-    var offset_range = tiles_in_a_row - platform_length
-    var platform_offset = randi() % offset_range
+    # Leave empty sides, so that platform doesnt touch the well
+    var MAX_ROW_LENGTH = tiles_in_a_row - 2
+    # mean and standard deviation for samplon
+    var mean = (MAX_ROW_LENGTH - Settings.MIN_ROW_LENGTH) / 2
+    var standard_deviation = 2
+    # Sample platform length, round down and convert to int
+    var platform_length = ceili(normal_distribution(mean, standard_deviation))
+    platform_length = max(platform_length, Settings.MIN_ROW_LENGTH)
+    platform_length = min(platform_length, MAX_ROW_LENGTH)
+    # -1 makes sure that the platform won't be long enough to touch the right wall
+    var offset_range = tiles_in_a_row - platform_length - 1
+    # + 1 makes sure that the left side doesn't touch the left wall
+    var platform_offset = randi() % offset_range + 1
     return { platform_offset = platform_offset, platform_length = platform_length}
 
 func _fill_platform_tiles(platform_offset, platform_length, root, tile, row, tile_size, player_view_rect):
