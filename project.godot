@@ -72,3 +72,5 @@ player1_right={
 2d_physics/layer_2="obstacle"
 2d_physics/layer_3="end_of_map"
 2d_physics/layer_4="effect"
+2d_physics/layer_5="obstacle_full"
+2d_physics/layer_6="wall"

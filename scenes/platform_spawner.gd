@@ -113,4 +113,4 @@ func _process(_delta):
         _spawn_new_platform("PlayerView")
         _spawn_new_platform("PlayerView2")
         last_platform_spawn_row_idx -= 2 # Set new row index two tows above
-      
+

@@ -1,5 +1,9 @@
 extends CharacterBody2D
 
+# TODO move this to some shared place
+const collision_layer_obstacle := (1 << 1)
+const collision_layer_obstacle_full := (1 << 4)
+
 # NOTE(mwk): for each player view, the index is hardcoded
 @export var player_idx : int
 
@@ -101,7 +105,8 @@ func _enable_effect(effect : Effect.EffectType):
     active_effect = effect
 
     if effect == Effect.EffectType.Bounce:
-        print("START BOUNCE")
         velocity = Vector2(-500, -300)
-    if effect == Effect.EffectType.TwistMovingDirections:
+        collision_mask &= (~collision_layer_obstacle)
+        collision_mask |= collision_layer_obstacle_full
+    elif effect == Effect.EffectType.TwistMovingDirections:
         horizontal_move_multiplier = -horizontal_move_multiplier
