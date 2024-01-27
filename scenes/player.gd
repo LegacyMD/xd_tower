@@ -21,6 +21,9 @@ const score_for_new_effect = 500
 
 var active_effect = Effect.EffectType.None
 
+var bounce_velocity_start =  Vector2(-5000, -3000)
+var bounce_velocity_damp = 0.95
+
 func _input(event):
     var just_pressed = event.is_pressed() and not event.is_echo()
     if Input.is_key_pressed(KEY_R) and just_pressed:
@@ -47,7 +50,7 @@ func _process(_delta):
 func _physics_process(delta):
     if active_effect == Effect.EffectType.Bounce:
         _process_bounce_effect_physics(delta)
-    if active_effect == Effect.EffectType.SmashWithBlock:
+    elif active_effect == Effect.EffectType.SmashWithBlock:
         _process_smash_with_block_effect_physics(delta)
     else:
         _process_normal_physics(delta)
@@ -61,6 +64,7 @@ func _process_bounce_effect_physics(delta):
         normal = Vector2(normal.y, normal.x)
 
         velocity = velocity.reflect(normal)
+        velocity *= bounce_velocity_damp
 
 func _process_smash_with_block_effect_physics(delta):
     position.y += 1
@@ -110,10 +114,10 @@ func _enable_effect(effect : Effect.EffectType):
     active_effect = effect
 
     if effect == Effect.EffectType.Bounce:
-        velocity = Vector2(-500, -300)
+        velocity = bounce_velocity_start
         collision_mask &= (~collision_layer_obstacle)
         collision_mask |= collision_layer_obstacle_full
-        $EffectEndTimer.wait_time = 1.0
+        $EffectEndTimer.wait_time = 1.1
     elif effect == Effect.EffectType.SmashWithBlock:
         $EffectEndTimer.wait_time = 3.0
     elif effect == Effect.EffectType.TwistMovingDirections:
@@ -127,7 +131,7 @@ func _enable_effect(effect : Effect.EffectType):
 
 func _disable_effect():
     if active_effect == Effect.EffectType.Bounce:
-        velocity = Vector2.ZERO
+        velocity = velocity.limit_length(horizontal_move_multiplier / 60.0)
         collision_mask &= (~collision_layer_obstacle_full)
         collision_mask |= collision_layer_obstacle
     elif active_effect == Effect.EffectType.SmashWithBlock:
