@@ -109,11 +109,7 @@ func _check_new_platform():
     if is_on_floor():
         if (min_platform_y > position_y):
             min_platform_y = position_y
-            print("POINT min_platform_y=%s" % min_platform_y)
             add_score(score_for_new_platform)
-
-    if Input.is_key_pressed(KEY_0):
-        print("position.y=%s" % position_y)
 
 func add_score(value):
     score += value

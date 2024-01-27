@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c0df40lhsahqm" path="res://scenes/player_view.tscn" id="1_mew4d"]
 [ext_resource type="Texture2D" uid="uid://bnhppr88odaml" path="res://images/bg2.png" id="2_3fxt5"]
 [ext_resource type="PackedScene" uid="uid://dhnwcp01tc7x1" path="res://scenes/platform_spawner.tscn" id="3_ny1kp"]
-[ext_resource type="PackedScene" uid="uid://g50wfi8uk4ch" path="res://game_over_menu.tscn" id="4_ah2uk"]
+[ext_resource type="PackedScene" path="res://game_over_menu.tscn" id="4_ah2uk"]
 
 [node name="RootNode" type="Node2D"]
 
