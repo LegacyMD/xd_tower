@@ -51,7 +51,7 @@ func _process(delta):
     pass
 
 func _on_area_2d_body_entered(body):
-    print("JA PIERDOLE")
+    #print("JA PIERDOLE")
     pass # Replace with function body.
 
 var move_force = 10

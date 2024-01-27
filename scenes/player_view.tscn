@@ -14,10 +14,6 @@ position = Vector2(2, 3)
 scale = Vector2(0.591111, 0.591111)
 texture = ExtResource("1_g4c12")
 
-[node name="Player" parent="." instance=ExtResource("1_wpenj")]
-collision_layer = 7
-collision_mask = 7
-
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(1.99994, 337)
 scale = Vector2(0.591111, 0.591111)
@@ -46,6 +42,14 @@ theme_override_font_sizes/font_size = 40
 text = "100"
 horizontal_alignment = 2
 
+[node name="Player" parent="." instance=ExtResource("1_wpenj")]
+position = Vector2(1.19209e-07, 2.38419e-07)
+scale = Vector2(1, 1)
+collision_layer = 7
+collision_mask = 7
+
 [connection signal="area_entered" from="Area2D" to="Player" method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="Player" method="_on_area_2d_body_entered"]
 [connection signal="tree_entered" from="Area2D/CollisionShape2D" to="Player" method="_on_collision_shape_2d_tree_entered"]
+
+[editable path="Player"]

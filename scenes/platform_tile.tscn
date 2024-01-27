@@ -12,7 +12,7 @@ script = ExtResource("1_gc5ne")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_aeuao")
 region_enabled = true
-region_rect = Rect2(229, 23.5, 98, 97)
+region_rect = Rect2(229.377, 22.081, 96, 96)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

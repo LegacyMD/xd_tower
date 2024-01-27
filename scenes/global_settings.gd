@@ -1,13 +1,10 @@
-extends Node2D
+extends Node
+
+var TILE_SIZE : int = 96
+var MIN_ROW_LENGTH: int = 2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    var tile_size = Settings.TILE_SIZE
-    var sprite = get_node("Sprite2D")
-    var rect = sprite.get_rect()
-    var scale = tile_size / rect.size.x
-
-    apply_scale(Vector2(scale, scale))
     pass # Replace with function body.
 
 
