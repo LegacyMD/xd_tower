@@ -15,7 +15,7 @@ script = ExtResource("1_gc5ne")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_fxl7y")
 region_enabled = true
-region_rect = Rect2(391, 62, 128, 128)
+region_rect = Rect2(225, 62, 128, 128)
 
 [node name="OneDirectionCollider" type="StaticBody2D" parent="."]
 collision_layer = 2
