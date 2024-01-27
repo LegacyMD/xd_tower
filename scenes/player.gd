@@ -102,7 +102,7 @@ func _physics_process(delta):
     move_and_slide()
 
 func _check_new_platform():
-    if player_idx == 1:
+    if player_idx == 0 or player_idx == 1:
         return
 
     var position_y = position.y - platform_container.position.y
