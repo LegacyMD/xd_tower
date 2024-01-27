@@ -1,11 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://be1m1bli4kvxx"]
+[gd_scene load_steps=7 format=3 uid="uid://be1m1bli4kvxx"]
 
 [ext_resource type="PackedScene" uid="uid://c0df40lhsahqm" path="res://scenes/player_view.tscn" id="1_mew4d"]
 [ext_resource type="Script" path="res://scenes/root_scene.gd" id="1_rdk11"]
 [ext_resource type="Texture2D" uid="uid://bnhppr88odaml" path="res://images/bg2.png" id="2_3fxt5"]
 [ext_resource type="PackedScene" uid="uid://dhnwcp01tc7x1" path="res://scenes/platform_spawner.tscn" id="3_ny1kp"]
-[ext_resource type="PackedScene" path="res://game_over_menu.tscn" id="4_ah2uk"]
 [ext_resource type="PackedScene" uid="uid://bmr6jpswwvdri" path="res://scenes/effect_spawner.tscn" id="4_6w6mx"]
+[ext_resource type="PackedScene" uid="uid://g50wfi8uk4ch" path="res://game_over_menu.tscn" id="4_ah2uk"]
 
 [node name="RootNode" type="Node2D"]
 script = ExtResource("1_rdk11")
@@ -16,9 +16,8 @@ position = Vector2(-276, -14)
 [node name="Background" parent="PlayerView" index="0"]
 position = Vector2(0, 0)
 
-[node name="Player" parent="PlayerView" index="4"]
-platform_container = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(2, 3),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":null)
-
+[node name="Player" parent="PlayerView" index="4" node_paths=PackedStringArray("platform_container")]
+platform_container = NodePath("")
 
 [node name="PlayerView2" parent="." instance=ExtResource("1_mew4d")]
 position = Vector2(328, -14)
@@ -26,10 +25,9 @@ position = Vector2(328, -14)
 [node name="Background" parent="PlayerView2" index="0"]
 texture = ExtResource("2_3fxt5")
 
-[node name="Player" parent="PlayerView2" index="4"]
+[node name="Player" parent="PlayerView2" index="4" node_paths=PackedStringArray("platform_container")]
 player_idx = 1
-platform_container = Object(Node2D,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"position":Vector2(2, 3),"rotation":0.0,"scale":Vector2(1, 1),"skew":0.0,"script":null)
-
+platform_container = NodePath("")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(24, -14)
@@ -41,12 +39,12 @@ zoom = Vector2(0.97, 0.97)
 
 [node name="GameOverMenu" parent="CanvasLayer" instance=ExtResource("4_ah2uk")]
 process_mode = 3
-[node name="EffectSpawner" parent="." instance=ExtResource("4_6w6mx")]
 
-[connection signal="platformSpawned" from="PlatformSpawner" to="EffectSpawner" method="_on_platform_spawner_platform_spawned"]
+[node name="EffectSpawner" parent="." instance=ExtResource("4_6w6mx")]
 
 [connection signal="push_player_idx" from="PlayerView/Player" to="CanvasLayer/GameOverMenu" method="_on_player_push_player_idx"]
 [connection signal="push_player_idx" from="PlayerView2/Player" to="CanvasLayer/GameOverMenu" method="_on_player_push_player_idx"]
+[connection signal="platformSpawned" from="PlatformSpawner" to="EffectSpawner" method="_on_platform_spawner_platform_spawned"]
 
 [editable path="PlayerView"]
 [editable path="PlayerView/Player"]
