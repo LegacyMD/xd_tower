@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c0df40lhsahqm"]
+[gd_scene load_steps=6 format=3 uid="uid://c0df40lhsahqm"]
 
 [ext_resource type="Texture2D" uid="uid://k56ue13rongu" path="res://images/bg1.png" id="1_g4c12"]
+[ext_resource type="Script" path="res://scenes/player_view.gd" id="1_hdgho"]
 [ext_resource type="PackedScene" uid="uid://cmsiiqo6trr02" path="res://scenes/player.tscn" id="1_wpenj"]
 [ext_resource type="FontFile" uid="uid://1a64xqtvvu7t" path="res://fonts/COMIC.TTF" id="3_3bjkn"]
 
@@ -8,11 +9,15 @@
 size = Vector2(964.211, 176.711)
 
 [node name="PlayerView" type="Node2D"]
+script = ExtResource("1_hdgho")
 
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(2, 3)
 scale = Vector2(0.591111, 0.591111)
 texture = ExtResource("1_g4c12")
+
+[node name="PlatformContainer" type="Node2D" parent="."]
+position = Vector2(2, 3)
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(1.99994, 337)

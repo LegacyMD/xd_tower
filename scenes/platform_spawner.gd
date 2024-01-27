@@ -26,7 +26,7 @@ func _create_tile(tile_scene, column, row, tile_size, player_view_rect):
     return instance
 
 func _spawn_tiles(player_view_name, tiles_dimensions, tile_size, player_view_rect):
-    var root = get_parent().find_child(player_view_name).find_child("Background")
+    var root = get_parent().find_child(player_view_name).find_child("PlatformContainer")
     var tile = preload("res://scenes/platform_tile.tscn")
 
     var tiles_in_a_row = tiles_dimensions.x
@@ -45,8 +45,7 @@ func _spawn_tiles(player_view_name, tiles_dimensions, tile_size, player_view_rec
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    var player_view_node = get_node("../PlayerView").find_child("Background")
-    var player_view_rect = player_view_node.get_rect()
+    var player_view_rect =  get_node("../PlayerView").background_rect
     var tile_size = _compute_tile_size(player_view_rect)
     var tiles_dimensions = _compute_tile_dimensions(player_view_rect)
 
