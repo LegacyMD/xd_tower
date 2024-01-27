@@ -25,8 +25,8 @@ text = "Player 2"
 player_idx = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(4, -14)
-zoom = Vector2(0.655, 0.655)
+position = Vector2(24, -14)
+zoom = Vector2(0.97, 0.97)
 
 [node name="PlatformSpawner" parent="." instance=ExtResource("3_ny1kp")]
 
