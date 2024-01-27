@@ -25,6 +25,23 @@ func _create_tile(tile_scene, column, row, tile_size, player_view_rect):
     instance.name = "PlatformTile_x%d_y%d" % [column, row]
     return instance
 
+func _fill_first_row(root, tile, tile_size, row, tiles_in_a_row, player_view_rect):
+    for c in tiles_in_a_row:
+        var instance = _create_tile(tile, c, row, tile_size, player_view_rect)
+        root.add_child.call_deferred(instance)
+
+func _generate_platform_size_and_offset(tiles_in_a_row):
+    var platform_length = max(randi() % tiles_in_a_row, Settings.MIN_ROW_LENGTH)
+    var offset_range = tiles_in_a_row - platform_length
+    var platform_offset = randi() % offset_range
+    return { platform_offset = platform_offset, platform_length = platform_length}
+
+func _fill_tiles(platform_offset, platform_length, root, tile, row, tile_size, player_view_rect):
+    for c in platform_length:
+        var column = platform_offset + c
+        var instance = _create_tile(tile, column, row, tile_size, player_view_rect)
+        root.add_child.call_deferred(instance)
+
 func _spawn_tiles(player_view_name, tiles_dimensions, tile_size, player_view_rect):
     var root = get_parent().find_child(player_view_name).find_child("PlatformContainer")
     var tile = preload("res://scenes/platform_tile.tscn")
@@ -32,16 +49,16 @@ func _spawn_tiles(player_view_name, tiles_dimensions, tile_size, player_view_rec
     var tiles_in_a_row = tiles_dimensions.x
     var rows_number = tiles_dimensions.y
 
-    for r in rows_number:
+    for r in range(rows_number - 1, -1, -1):
+        if r == rows_number - 1: # fill the first row to full capacity
+            _fill_first_row(root, tile, tile_size, r, tiles_in_a_row, player_view_rect)
         if r % 2: # Skip every second platform to leave blank rows between
             continue
-        var platform_length = max(randi() % tiles_in_a_row, Settings.MIN_ROW_LENGTH)
-        var offset_range = tiles_in_a_row - platform_length
-        var platform_offset = randi() % offset_range
-        for c in platform_length:
-            var column = platform_offset + c
-            var instance = _create_tile(tile, column, r, tile_size, player_view_rect)
-            root.add_child.call_deferred(instance)
+        var size_and_offset = _generate_platform_size_and_offset(tiles_in_a_row)
+        var platform_length = size_and_offset.platform_length
+        var platform_offset = size_and_offset.platform_offset
+        _fill_tiles(platform_offset, platform_length, root, tile, r, tile_size, player_view_rect)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
