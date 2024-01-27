@@ -123,7 +123,7 @@ func _disable_effect():
         collision_mask &= (~collision_layer_obstacle_full)
         collision_mask |= collision_layer_obstacle
     elif active_effect == Effect.EffectType.TwistMovingDirections:
-        pass
+        horizontal_move_multiplier = -horizontal_move_multiplier
     else:
         print("WARNING: _disable_effect() called on unsupported effect type. Wtf?")
 
