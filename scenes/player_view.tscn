@@ -63,7 +63,7 @@ collision_layer = 2
 position = Vector2(-264, 0)
 shape = SubResource("RectangleShape2D_8ajvc")
 
-[connection signal="area_entered" from="Area2D" to="Player" method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="Area2D" to="Player" method="_on_area_2d_body_entered"]
 [connection signal="tree_entered" from="Area2D/CollisionShape2D" to="Player" method="_on_collision_shape_2d_tree_entered"]
 [connection signal="score_changed" from="Player" to="ScoreLabel" method="_on_player_score_changed"]

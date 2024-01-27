@@ -39,6 +39,12 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 64
 text = "Game over!"
 
+[node name="PlayerLabel" type="Label" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 48
+text = "Placeholder"
+
 [node name="ResumeButton" type="Button" parent="GridContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32

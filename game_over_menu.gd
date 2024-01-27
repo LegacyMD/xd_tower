@@ -3,7 +3,7 @@ extends Control
 var paused : bool = false:
     set = paused_from_value
 
-func _unhandled_input(event : InputEvent):
+func _input(event : InputEvent):
     if event.is_action_pressed("ui_cancel"):
         paused = !paused
 
@@ -27,3 +27,9 @@ func _on_restart_button_pressed():
 
 func _on_quit_button_pressed():
     get_tree().quit()
+
+func _on_player_push_player_idx(player_idx):
+    var player_label = $GridContainer/PlayerLabel
+    var player_label_text = "Player %d wins" % player_idx
+    player_label.text = player_label_text
+    paused = !paused

@@ -60,9 +60,10 @@ func _ready():
     #add_gamepad_axis_mapping("player1_down", JOY_AXIS_LEFT_Y, 1, 1)
     #add_gamepad_button_mapping("player1_jump", JOY_BUTTON_A, 1)
 
+signal push_player_idx(player_idx)
+
 func _on_area_2d_body_entered(_body):
-    print("JA PIERDOLE")
-    pass
+    push_player_idx.emit(player_idx)
 
 func _process(_delta):
     _check_new_platform()
