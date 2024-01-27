@@ -3,10 +3,10 @@ extends CharacterBody2D
 # NOTE(mwk): for each player view, the index is hardcoded
 @export var player_idx : int
 
-var horizontal_move_multiplier = 10
-var vertical_jump_multiplier = 800
+var horizontal_move_multiplier = 30
+var vertical_jump_multiplier = 950
 var vertical_fall_multiplier = 1000
-var gravity := 50
+var gravity := 55
 
 func add_keyboard_mapping(action_name, keycode):
     var input_event_key = InputEventKey.new()
@@ -69,6 +69,10 @@ func _physics_process(delta):
     # mwk: calculate incidental velocity for left and right movements
     var horizontal_input := Input.get_action_strength(player_right) - Input.get_action_strength(player_left)
     velocity.x += horizontal_input * horizontal_move_multiplier
+    if horizontal_input > 0:
+        velocity.x = max(velocity.x, 0)
+    elif horizontal_input < 0:
+        velocity.x = min(velocity.x, 0)
 
     # mwk: handle jumping
     if Input.is_action_just_pressed(player_up) and is_on_floor():
