@@ -10,7 +10,7 @@
 size = Vector2(964.211, 176.711)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ajvc"]
-size = Vector2(11, 843)
+size = Vector2(11, 3710)
 
 [node name="PlayerView" type="Node2D"]
 script = ExtResource("1_hdgho")
@@ -33,13 +33,13 @@ position = Vector2(0.0377138, 65.5922)
 shape = SubResource("RectangleShape2D_d1cn2")
 
 [node name="ScoreLabel" type="Label" parent="."]
-offset_left = 88.0
-offset_top = -316.0
-offset_right = 280.0
-offset_bottom = -259.0
+offset_left = -270.0
+offset_top = -307.0
+offset_right = 279.0
+offset_bottom = -250.0
 theme_override_fonts/font = ExtResource("3_3bjkn")
 theme_override_font_sizes/font_size = 40
-text = "100"
+text = "<score>"
 horizontal_alignment = 2
 script = ExtResource("4_25gyq")
 
@@ -51,7 +51,7 @@ collision_layer = 32
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
-position = Vector2(-287.5, 6.5)
+position = Vector2(-287.5, -759)
 shape = SubResource("RectangleShape2D_8ajvc")
 
 [node name="RightWall" type="StaticBody2D" parent="."]
@@ -60,7 +60,8 @@ collision_layer = 32
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
-position = Vector2(-264, 0)
+position = Vector2(-264, -668)
+scale = Vector2(0.939083, 7.31806)
 shape = SubResource("RectangleShape2D_8ajvc")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
