@@ -101,9 +101,6 @@ func _physics_process(_delta):
     move_and_slide()
 
 func _check_new_platform():
-    if player_idx == 1:
-        return
-
     if is_on_floor():
         if (min_platform_y > global_position.y):
             min_platform_y = global_position.y
