@@ -2,15 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://c0df40lhsahqm" path="res://scenes/player_view.tscn" id="1_mew4d"]
 [ext_resource type="Texture2D" uid="uid://bnhppr88odaml" path="res://images/bg2.png" id="2_3fxt5"]
-[ext_resource type="PackedScene" path="res://scenes/platform_spawner.tscn" id="3_ny1kp"]
+[ext_resource type="PackedScene" uid="uid://dhnwcp01tc7x1" path="res://scenes/platform_spawner.tscn" id="3_ny1kp"]
 
 [node name="RootNode" type="Node2D"]
 
 [node name="PlayerView" parent="." instance=ExtResource("1_mew4d")]
 position = Vector2(-276, -14)
-
-[node name="Player" parent="PlayerView" index="1"]
-player_idx = 0
 
 [node name="Background" parent="PlayerView" index="0"]
 position = Vector2(0, 0)
@@ -21,11 +18,11 @@ position = Vector2(328, -14)
 [node name="Background" parent="PlayerView2" index="0"]
 texture = ExtResource("2_3fxt5")
 
-[node name="Player" parent="PlayerView2" index="1"]
-player_idx = 1
-
-[node name="PlayerNameLabel" parent="PlayerView2" index="3"]
+[node name="PlayerNameLabel" parent="PlayerView2" index="2"]
 text = "Player 2"
+
+[node name="Player" parent="PlayerView2" index="4"]
+player_idx = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(4, -14)
