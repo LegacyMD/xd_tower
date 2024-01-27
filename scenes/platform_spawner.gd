@@ -1,12 +1,12 @@
 extends Node2D
 
 var last_platform_spawn_position : float = 0.0
-var last_platform_spawn_row_idx : int = -3
+var last_platform_spawn_row_idx : int = -2
 
 # Computes size of a platofrm tile in pixels
 func _compute_tile_size(player_view_rect):
     var desired_tile_dim = Settings.TILE_SIZE # Same is used for height and width
-    print("Is tile_size_divisible? %s" % ("No" if int(player_view_rect.size.x) % desired_tile_dim else "Yes"))
+    #print("Is tile_size_divisible? %s" % ("No" if int(player_view_rect.size.x) % desired_tile_dim else "Yes"))
     return Vector2i(desired_tile_dim, desired_tile_dim)
 
 # Computes how many tiles fit horizontally and vertically on a single player_view
