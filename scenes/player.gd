@@ -60,7 +60,7 @@ func _ready():
     #add_gamepad_button_mapping("player1_jump", JOY_BUTTON_A, 1)
 
 func _on_area_2d_body_entered(_body):
-    #print("JA PIERDOLE")
+    print("JA PIERDOLE")
     pass
 
 func _process(_delta):

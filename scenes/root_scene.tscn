@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://be1m1bli4kvxx"]
+[gd_scene load_steps=5 format=3 uid="uid://be1m1bli4kvxx"]
 
 [ext_resource type="PackedScene" uid="uid://c0df40lhsahqm" path="res://scenes/player_view.tscn" id="1_mew4d"]
 [ext_resource type="Texture2D" uid="uid://bnhppr88odaml" path="res://images/bg2.png" id="2_3fxt5"]
 [ext_resource type="PackedScene" uid="uid://dhnwcp01tc7x1" path="res://scenes/platform_spawner.tscn" id="3_ny1kp"]
+[ext_resource type="PackedScene" uid="uid://g50wfi8uk4ch" path="res://game_over_menu.tscn" id="4_ah2uk"]
 
 [node name="RootNode" type="Node2D"]
 
@@ -26,6 +27,11 @@ position = Vector2(24, -14)
 zoom = Vector2(0.97, 0.97)
 
 [node name="PlatformSpawner" parent="." instance=ExtResource("3_ny1kp")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameOverMenu" parent="CanvasLayer" instance=ExtResource("4_ah2uk")]
+process_mode = 3
 
 [editable path="PlayerView"]
 [editable path="PlayerView/Player"]
