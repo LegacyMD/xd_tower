@@ -1,8 +1,11 @@
 extends Node2D
 
+class_name Effect
+
 signal effect_gathered(effect_type)
 
 enum EffectType {
+    None,
     Bounce,
     SmashWithBlock,
 }

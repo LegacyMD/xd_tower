@@ -16,6 +16,8 @@ var min_platform_y = 100000 # Used to keep track of score
 const score_for_new_platform = 100
 const score_for_new_effect = 500
 
+var active_effect = Effect.EffectType.None
+
 func add_keyboard_mapping(action_name, keycode):
     var input_event_key = InputEventKey.new()
     input_event_key.physical_keycode = keycode
@@ -68,7 +70,28 @@ func _on_area_2d_body_entered(_body):
 func _process(_delta):
     _check_new_platform()
 
+    # Debug code to test effects
+    if Input.is_action_just_pressed("ui_home"):
+        _enable_effect(Effect.EffectType.Bounce)
+
+
 func _physics_process(delta):
+    if active_effect == Effect.EffectType.Bounce:
+        _process_bounce_effect_physics(delta)
+    else:
+        _process_normal_physics(delta)
+
+func _process_bounce_effect_physics(delta):
+    var collision : KinematicCollision2D = move_and_collide(velocity * delta)
+    if collision:
+        # Why the fuck do I have to do this? No clue, but it
+        # works somehow...
+        var normal := collision.get_normal()
+        normal = Vector2(normal.y, normal.x)
+
+        velocity = velocity.reflect(normal)
+
+func _process_normal_physics(delta):
     velocity.y += delta * gravity_multiplier
 
     # mwk: player index -> player name -> player inputs
@@ -115,3 +138,10 @@ func _check_new_platform():
 func add_score(value):
     score += value
     score_changed.emit(score)
+
+func _enable_effect(effect : Effect.EffectType):
+    active_effect = effect
+
+    if effect == Effect.EffectType.Bounce:
+        print("START BOUNCE")
+        velocity = Vector2(-500, -300)
