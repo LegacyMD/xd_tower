@@ -16,18 +16,14 @@ position = Vector2(-276, -14)
 [node name="Background" parent="PlayerView" index="0"]
 position = Vector2(0, 0)
 
-[node name="Player" parent="PlayerView" index="4" node_paths=PackedStringArray("platform_container")]
-platform_container = NodePath("")
-
 [node name="PlayerView2" parent="." instance=ExtResource("1_mew4d")]
 position = Vector2(328, -14)
 
 [node name="Background" parent="PlayerView2" index="0"]
 texture = ExtResource("2_3fxt5")
 
-[node name="Player" parent="PlayerView2" index="4" node_paths=PackedStringArray("platform_container")]
+[node name="Player" parent="PlayerView2" index="4"]
 player_idx = 1
-platform_container = NodePath("")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(24, -14)

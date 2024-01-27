@@ -2,7 +2,6 @@ extends CharacterBody2D
 
 # NOTE(mwk): for each player view, the index is hardcoded
 @export var player_idx : int
-@export var platform_container : Node2D
 
 signal score_changed(new_score)
 
@@ -125,10 +124,7 @@ func _process_normal_physics(delta):
     move_and_slide()
 
 func _check_new_platform():
-    if player_idx == 0 or player_idx == 1:
-        return
-
-    var position_y = position.y - platform_container.position.y
+    var position_y = position.y - get_node("../PlatformContainer").position.y
 
     if is_on_floor():
         if (min_platform_y > position_y):
