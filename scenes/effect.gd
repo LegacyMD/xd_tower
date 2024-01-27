@@ -8,10 +8,11 @@ enum EffectType {
     None,
     Bounce,
     SmashWithBlock,
+    TwistMovingDirections
 }
 
 func _on_player_entered(body):
-    print("Player gathered effect")
+    print("Player %s gathered effect" % body.name)
 
     var effect_type = EffectType.keys()[randi() % EffectType.size()]
     effect_gathered.emit(effect_type)

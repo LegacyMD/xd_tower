@@ -36,6 +36,8 @@ func _process(_delta):
     # Debug code to test effects
     if Input.is_action_just_pressed("ui_home"):
         _enable_effect(Effect.EffectType.Bounce)
+    elif Input.is_action_just_pressed("ui_end"):
+        _enable_effect(Effect.EffectType.TwistMovingDirections)
 
 
 func _physics_process(delta):
@@ -67,10 +69,6 @@ func _process_normal_physics(delta):
     # mwk: calculate incidental velocity for left and right movements
     var horizontal_input := Input.get_action_strength(player_right) - Input.get_action_strength(player_left)
     velocity.x = delta * horizontal_input * horizontal_move_multiplier
-    if horizontal_input > 0:
-        velocity.x = max(velocity.x, 0)
-    elif horizontal_input < 0:
-        velocity.x = min(velocity.x, 0)
 
     # mwk: handle jumping
     if Input.is_action_just_pressed(player_up) and is_on_floor():
@@ -105,3 +103,5 @@ func _enable_effect(effect : Effect.EffectType):
     if effect == Effect.EffectType.Bounce:
         print("START BOUNCE")
         velocity = Vector2(-500, -300)
+    if effect == Effect.EffectType.TwistMovingDirections:
+        horizontal_move_multiplier = -horizontal_move_multiplier
