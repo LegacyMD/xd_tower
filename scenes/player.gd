@@ -49,15 +49,15 @@ func _ready():
     add_keyboard_mapping("player1_right", KEY_RIGHT)
 
     # mwk: player -> gamepad mappings
-    add_gamepad_axis_mapping("player0_left", JOY_AXIS_LEFT_X, -1)
-    add_gamepad_axis_mapping("player0_right", JOY_AXIS_LEFT_X, 1)
-    add_gamepad_axis_mapping("player0_down", JOY_AXIS_LEFT_Y, 1)
-    add_gamepad_button_mapping("player0_jump", JOY_BUTTON_A)
-
-    add_gamepad_axis_mapping("player1_left", JOY_AXIS_LEFT_X, -1, 1)
-    add_gamepad_axis_mapping("player1_right", JOY_AXIS_LEFT_X, 1, 1)
-    add_gamepad_axis_mapping("player1_down", JOY_AXIS_LEFT_Y, 1, 1)
-    add_gamepad_button_mapping("player1_jump", JOY_BUTTON_A, 1)
+    #add_gamepad_axis_mapping("player0_left", JOY_AXIS_LEFT_X, -1)
+    #add_gamepad_axis_mapping("player0_right", JOY_AXIS_LEFT_X, 1)
+    #add_gamepad_axis_mapping("player0_down", JOY_AXIS_LEFT_Y, 1)
+    #add_gamepad_button_mapping("player0_jump", JOY_BUTTON_A)
+#
+    #add_gamepad_axis_mapping("player1_left", JOY_AXIS_LEFT_X, -1, 1)
+    #add_gamepad_axis_mapping("player1_right", JOY_AXIS_LEFT_X, 1, 1)
+    #add_gamepad_axis_mapping("player1_down", JOY_AXIS_LEFT_Y, 1, 1)
+    #add_gamepad_button_mapping("player1_jump", JOY_BUTTON_A, 1)
 
 func _on_area_2d_body_entered(_body):
     #print("JA PIERDOLE")
