@@ -32,20 +32,11 @@ collision_layer = 4
 position = Vector2(0.0377138, 65.5922)
 shape = SubResource("RectangleShape2D_d1cn2")
 
-[node name="PlayerNameLabel" type="Label" parent="."]
-offset_left = -159.0
-offset_top = -310.0
-offset_right = -5.0
-offset_bottom = -253.0
-theme_override_fonts/font = ExtResource("3_3bjkn")
-theme_override_font_sizes/font_size = 40
-text = "Player 1"
-
 [node name="ScoreLabel" type="Label" parent="."]
-offset_left = 68.0
-offset_top = -303.0
-offset_right = 260.0
-offset_bottom = -246.0
+offset_left = 88.0
+offset_top = -316.0
+offset_right = 280.0
+offset_bottom = -259.0
 theme_override_fonts/font = ExtResource("3_3bjkn")
 theme_override_font_sizes/font_size = 40
 text = "100"
