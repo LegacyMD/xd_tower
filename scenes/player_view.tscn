@@ -43,9 +43,10 @@ text = "100"
 horizontal_alignment = 2
 script = ExtResource("4_25gyq")
 
-[node name="Player" parent="." instance=ExtResource("1_wpenj")]
+[node name="Player" parent="." node_paths=PackedStringArray("platform_container") instance=ExtResource("1_wpenj")]
 position = Vector2(0, 166)
 collision_mask = 7
+platform_container = NodePath("../PlatformContainer")
 
 [node name="LeftWall" type="StaticBody2D" parent="."]
 collision_layer = 2
