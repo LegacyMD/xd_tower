@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://q0a51iybijua"]
+[gd_scene load_steps=4 format=3 uid="uid://q0a51iybijua"]
 
 [ext_resource type="Script" path="res://scenes/platform_tile.gd" id="1_gc5ne"]
 [ext_resource type="Texture2D" uid="uid://nri5rrjxmxus" path="res://images/tileset.png" id="2_aeuao"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jgytd"]
+size = Vector2(97.5, 95.5)
 
 [node name="PlatformTile" type="Node2D"]
 script = ExtResource("1_gc5ne")
@@ -10,3 +13,9 @@ script = ExtResource("1_gc5ne")
 texture = ExtResource("2_aeuao")
 region_enabled = true
 region_rect = Rect2(229, 23.5, 98, 97)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0.25, -0.75)
+shape = SubResource("RectangleShape2D_jgytd")
