@@ -80,11 +80,12 @@ func _spawn_new_platform(player_view_name):
     var platform_length = size_and_offset.platform_length
     var platform_offset = size_and_offset.platform_offset
     _fill_platform_tiles(platform_offset, platform_length, root, tile, r, tile_size, player_view_rect)
+    _emit_spawned_signal(player_view_name)
 
 func _emit_spawned_signal(player_view_name):
     var player_view_rect =  get_parent().find_child(player_view_name).background_rect
     var tile_size = _compute_tile_size(player_view_rect)
-    var row = last_platform_spawn_row_idx + 1
+    var row = last_platform_spawn_row_idx - 1
     var column = 0
     var position = _pixel_pos_from_column_row(column, row, tile_size, player_view_rect)
     var y_position = position.y
@@ -112,7 +113,4 @@ func _process(_delta):
         _spawn_new_platform("PlayerView")
         _spawn_new_platform("PlayerView2")
         last_platform_spawn_row_idx -= 2 # Set new row index two tows above
-        _emit_spawned_signal("PlayerView")
-        _emit_spawned_signal("PlayerView2")
-        
-        
+      
