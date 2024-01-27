@@ -1,21 +1,21 @@
 [gd_scene load_steps=5 format=3 uid="uid://q0a51iybijua"]
 
 [ext_resource type="Script" path="res://scenes/platform_tile.gd" id="1_gc5ne"]
-[ext_resource type="Texture2D" uid="uid://nri5rrjxmxus" path="res://images/tileset.png" id="2_aeuao"]
+[ext_resource type="Texture2D" uid="uid://dkw2tnwwkwnuo" path="res://images/sheet1.png" id="2_fxl7y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jgytd"]
 size = Vector2(97.5, 24.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_muq3m"]
-size = Vector2(96, 96)
+size = Vector2(127, 126)
 
 [node name="PlatformTile" type="Node2D"]
 script = ExtResource("1_gc5ne")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_aeuao")
+texture = ExtResource("2_fxl7y")
 region_enabled = true
-region_rect = Rect2(229.377, 22.081, 96, 96)
+region_rect = Rect2(391, 62, 128, 128)
 
 [node name="OneDirectionCollider" type="StaticBody2D" parent="."]
 collision_layer = 2
@@ -32,5 +32,6 @@ collision_layer = 16
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FullCollider"]
+position = Vector2(0.5, -1)
 shape = SubResource("RectangleShape2D_muq3m")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)

@@ -23,17 +23,24 @@ func _pixel_pos_from_column_row(column, row, tile_size, player_view_rect):
     var y = (row * tile_size.y) + player_view_rect.position.y + (tile_size.y / 2)
     return { x = x, y = y }
 
-func _create_tile(tile_scene, column, row, tile_size, player_view_rect):
+func _create_tile(tile_scene, column, row, tile_size, player_view_rect, index_in_row, tiles_in_a_row):
     var instance = tile_scene.instantiate()
     var position = _pixel_pos_from_column_row(column, row, tile_size, player_view_rect)
     instance.position.x = position.x
     instance.position.y = position.y
     instance.name = "PlatformTile_x%d_y%d" % [column, row]
+
+    if index_in_row == 0:
+        instance.set_texture(PlatformTile.TileType.Left)
+    elif index_in_row == tiles_in_a_row - 1:
+        instance.set_texture(PlatformTile.TileType.Right)
+    else:
+        instance.set_texture(PlatformTile.TileType.Middle)
     return instance
 
 func _fill_starting_platform_tiles(root, tile, tile_size, row, tiles_in_a_row, player_view_rect):
     for c in tiles_in_a_row:
-        var instance = _create_tile(tile, c, row, tile_size, player_view_rect)
+        var instance = _create_tile(tile, c, row, tile_size, player_view_rect, c, tiles_in_a_row)
         root.add_child.call_deferred(instance)
 
 # Function to generate a sample from an approximate normal distribution
@@ -66,7 +73,7 @@ func _generate_platform_size_and_offset(tiles_in_a_row):
 func _fill_platform_tiles(platform_offset, platform_length, root, tile, row, tile_size, player_view_rect):
     for c in platform_length:
         var column = platform_offset + c
-        var instance = _create_tile(tile, column, row, tile_size, player_view_rect)
+        var instance = _create_tile(tile, column, row, tile_size, player_view_rect, c, platform_length)
         root.add_child.call_deferred(instance)
 
 func _init_platforms(player_view_name, tiles_dimensions, tile_size, player_view_rect):
