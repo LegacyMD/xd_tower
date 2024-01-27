@@ -9,6 +9,21 @@ func add_keyboard_mapping(action_name, keycode):
     InputMap.add_action(action_name)
     InputMap.action_add_event(action_name, input_event_key)
 
+func add_gamepad_button_mapping(action_name, gamepad_button_index, device := -1):
+    var input_event_joypad_button = InputEventJoypadButton.new()
+    input_event_joypad_button.button_index = gamepad_button_index
+    input_event_joypad_button.device = device
+    InputMap.add_action(action_name)
+    InputMap.action_add_event(action_name, input_event_joypad_button)
+
+func add_gamepad_axis_mapping(action_name, axis, axis_value, device := -1):
+    var input_event_joypad_motion = InputEventJoypadMotion.new()
+    input_event_joypad_motion.axis = axis
+    input_event_joypad_motion.axis_value = axis_value
+    input_event_joypad_motion.device = device
+    InputMap.add_action(action_name)
+    InputMap.action_add_event(action_name, input_event_joypad_motion)
+
 func _ready():
     # mwk: player -> keyboard mappings
     add_keyboard_mapping("player0_up", KEY_W)
@@ -21,6 +36,17 @@ func _ready():
     add_keyboard_mapping("player1_left", KEY_LEFT)
     add_keyboard_mapping("player1_right", KEY_RIGHT)
     
+    # mwk: player -> gamepad mappings
+    add_gamepad_axis_mapping("player0_left", JOY_AXIS_LEFT_X, -1)
+    add_gamepad_axis_mapping("player0_right", JOY_AXIS_LEFT_X, 1)
+    add_gamepad_axis_mapping("player0_down", JOY_AXIS_LEFT_Y, 1)
+    add_gamepad_button_mapping("player0_jump", JOY_BUTTON_A)
+
+    add_gamepad_axis_mapping("player1_left", JOY_AXIS_LEFT_X, -1, 1)
+    add_gamepad_axis_mapping("player1_right", JOY_AXIS_LEFT_X, 1, 1)
+    add_gamepad_axis_mapping("player1_down", JOY_AXIS_LEFT_Y, 1, 1)
+    add_gamepad_button_mapping("player1_jump", JOY_BUTTON_A, 1)
+
 func _process(delta):
     pass
 
