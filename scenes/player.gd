@@ -78,7 +78,13 @@ func _physics_process(delta):
     if Input.is_action_just_pressed(player_up) and is_on_floor():
         velocity.y -= vertical_jump_multiplier
 
+    # mdziuban: handle dropping down
     if Input.is_action_just_pressed(player_down):
+        if is_on_floor():
+            # If standing on a platform, drop below it
+            position.y += 5
+
+        # Accelerate further down
         velocity.y += vertical_fall_multiplier
         velocity.y = max(velocity.y, 0)
 

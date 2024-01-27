@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://nri5rrjxmxus" path="res://images/tileset.png" id="2_aeuao"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jgytd"]
-size = Vector2(97.5, 95.5)
+size = Vector2(97.5, 24.5)
 
 [node name="PlatformTile" type="Node2D"]
 script = ExtResource("1_gc5ne")
@@ -17,6 +17,6 @@ region_rect = Rect2(229.377, 22.081, 96, 96)
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(0.25, -0.75)
+position = Vector2(0.25, -36.25)
 shape = SubResource("RectangleShape2D_jgytd")
 one_way_collision = true
