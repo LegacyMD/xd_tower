@@ -4,7 +4,7 @@ var last_platform_spawn_position : float = 0.0
 var last_platform_spawn_row_idx : int = -2
 
 # Computes size of a platofrm tile in pixels
-func _compute_tile_size(player_view_rect):
+func _compute_tile_size(_player_view_rect):
     var desired_tile_dim = Settings.TILE_SIZE # Same is used for height and width
     #print("Is tile_size_divisible? %s" % ("No" if int(player_view_rect.size.x) % desired_tile_dim else "Yes"))
     return Vector2i(desired_tile_dim, desired_tile_dim)
@@ -83,7 +83,7 @@ func _ready():
     _init_platforms("PlayerView2", tiles_dimensions, tile_size, player_view_rect)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
     var container = get_node("../PlayerView/PlatformContainer")
     var container_y = container.position.y
     var increment = (container.scale.y * Settings.TILE_SIZE) * 2

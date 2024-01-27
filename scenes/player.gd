@@ -59,14 +59,14 @@ func _ready():
     add_gamepad_axis_mapping("player1_down", JOY_AXIS_LEFT_Y, 1, 1)
     add_gamepad_button_mapping("player1_jump", JOY_BUTTON_A, 1)
 
-func _on_area_2d_body_entered(body):
+func _on_area_2d_body_entered(_body):
     #print("JA PIERDOLE")
     pass
 
-func _process(delta):
+func _process(_delta):
     _check_new_platform()
 
-func _physics_process(delta):
+func _physics_process(_delta):
     velocity.y += gravity
 
     # mwk: player index -> player name -> player inputs
