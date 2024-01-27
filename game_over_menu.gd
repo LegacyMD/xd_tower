@@ -29,6 +29,10 @@ func _on_quit_button_pressed():
     get_tree().quit()
 
 func _on_player_push_player_idx(player_idx):
+    # TEMP
+    if Settings.DISABLE_WINNING:
+        return
+
     var player_label = $GridContainer/PlayerLabel
     var player_label_text = "Player %d wins" % player_idx
     player_label.text = player_label_text
