@@ -17,27 +17,6 @@ const score_for_new_effect = 500
 
 var active_effect = Effect.EffectType.None
 
-func add_keyboard_mapping(action_name, keycode):
-    var input_event_key = InputEventKey.new()
-    input_event_key.physical_keycode = keycode
-    InputMap.add_action(action_name)
-    InputMap.action_add_event(action_name, input_event_key)
-
-func add_gamepad_button_mapping(action_name, gamepad_button_index, device := -1):
-    var input_event_joypad_button = InputEventJoypadButton.new()
-    input_event_joypad_button.button_index = gamepad_button_index
-    input_event_joypad_button.device = device
-    InputMap.add_action(action_name)
-    InputMap.action_add_event(action_name, input_event_joypad_button)
-
-func add_gamepad_axis_mapping(action_name, axis, axis_value, device := -1):
-    var input_event_joypad_motion = InputEventJoypadMotion.new()
-    input_event_joypad_motion.axis = axis
-    input_event_joypad_motion.axis_value = axis_value
-    input_event_joypad_motion.device = device
-    InputMap.add_action(action_name)
-    InputMap.action_add_event(action_name, input_event_joypad_motion)
-
 func _ready():
     pass
 
