@@ -41,12 +41,14 @@ func _process(_delta):
     if Input.is_action_just_pressed("ui_home"):
         _enable_effect(Effect.EffectType.Bounce)
     elif Input.is_action_just_pressed("ui_end"):
-        _enable_effect(Effect.EffectType.TwistMovingDirections)
+        _enable_effect(Effect.EffectType.SmashWithBlock)
 
 
 func _physics_process(delta):
     if active_effect == Effect.EffectType.Bounce:
         _process_bounce_effect_physics(delta)
+    if active_effect == Effect.EffectType.SmashWithBlock:
+        _process_smash_with_block_effect_physics(delta)
     else:
         _process_normal_physics(delta)
 
@@ -59,6 +61,9 @@ func _process_bounce_effect_physics(delta):
         normal = Vector2(normal.y, normal.x)
 
         velocity = velocity.reflect(normal)
+
+func _process_smash_with_block_effect_physics(delta):
+    position.y += 1
 
 func _process_normal_physics(delta):
     velocity.y += delta * gravity_multiplier
@@ -108,12 +113,15 @@ func _enable_effect(effect : Effect.EffectType):
         velocity = Vector2(-500, -300)
         collision_mask &= (~collision_layer_obstacle)
         collision_mask |= collision_layer_obstacle_full
+        $EffectEndTimer.wait_time = 1.0
+    elif effect == Effect.EffectType.SmashWithBlock:
+        $EffectEndTimer.wait_time = 3.0
     elif effect == Effect.EffectType.TwistMovingDirections:
         horizontal_move_multiplier = -horizontal_move_multiplier
+        $EffectEndTimer.wait_time = 5.0
     else:
         print("WARNING: _enable_effect() called with unsupported effect type. Wtf?")
 
-    $EffectEndTimer.wait_time = 1.0 # TODO make this effect-specific?
     $EffectEndTimer.start()
 
 
@@ -122,6 +130,8 @@ func _disable_effect():
         velocity = Vector2.ZERO
         collision_mask &= (~collision_layer_obstacle_full)
         collision_mask |= collision_layer_obstacle
+    elif active_effect == Effect.EffectType.SmashWithBlock:
+        pass
     elif active_effect == Effect.EffectType.TwistMovingDirections:
         horizontal_move_multiplier = -horizontal_move_multiplier
     else:
