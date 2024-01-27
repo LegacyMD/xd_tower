@@ -110,3 +110,21 @@ func _enable_effect(effect : Effect.EffectType):
         collision_mask |= collision_layer_obstacle_full
     elif effect == Effect.EffectType.TwistMovingDirections:
         horizontal_move_multiplier = -horizontal_move_multiplier
+    else:
+        print("WARNING: _enable_effect() called with unsupported effect type. Wtf?")
+
+    $EffectEndTimer.wait_time = 1.0 # TODO make this effect-specific?
+    $EffectEndTimer.start()
+
+
+func _disable_effect():
+    if active_effect == Effect.EffectType.Bounce:
+        velocity = Vector2.ZERO
+        collision_mask &= (~collision_layer_obstacle_full)
+        collision_mask |= collision_layer_obstacle
+    elif active_effect == Effect.EffectType.TwistMovingDirections:
+        pass
+    else:
+        print("WARNING: _disable_effect() called on unsupported effect type. Wtf?")
+
+    active_effect = Effect.EffectType.None
