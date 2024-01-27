@@ -1,5 +1,7 @@
 extends Node2D
 
+signal platformSpawned(view_name, x_beg, x_end, y_position)
+
 var last_platform_spawn_position : float = 0.0
 var last_platform_spawn_row_idx : int = -2
 
@@ -16,10 +18,16 @@ func _compute_tile_dimensions(player_view_rect):
     var vertical_tiles_num = player_view_rect.size.y / tile_size.x
     return Vector2i(horizontal_tiles_num, vertical_tiles_num)
 
+func _pixel_pos_from_column_row(column, row, tile_size, player_view_rect):
+    var x = (column * tile_size.x) + player_view_rect.position.x + (tile_size.x / 2)
+    var y = (row * tile_size.y) + player_view_rect.position.y + (tile_size.y / 2)
+    return { x = x, y = y }
+
 func _create_tile(tile_scene, column, row, tile_size, player_view_rect):
     var instance = tile_scene.instantiate()
-    instance.position.x = (column * tile_size.x) + player_view_rect.position.x + (tile_size.x / 2)
-    instance.position.y = (row * tile_size.y) + player_view_rect.position.y + (tile_size.y / 2)
+    var position = _pixel_pos_from_column_row(column, row, tile_size, player_view_rect)
+    instance.position.x = position.x
+    instance.position.y = position.y
     instance.name = "PlatformTile_x%d_y%d" % [column, row]
     return instance
 
@@ -73,6 +81,17 @@ func _spawn_new_platform(player_view_name):
     var platform_offset = size_and_offset.platform_offset
     _fill_platform_tiles(platform_offset, platform_length, root, tile, r, tile_size, player_view_rect)
 
+func _emit_spawned_signal(player_view_name):
+    var player_view_rect =  get_parent().find_child(player_view_name).background_rect
+    var tile_size = _compute_tile_size(player_view_rect)
+    var row = last_platform_spawn_row_idx + 1
+    var column = 0
+    var position = _pixel_pos_from_column_row(column, row, tile_size, player_view_rect)
+    var y_position = position.y
+    var x_beg = player_view_rect.position.x
+    var x_end = player_view_rect.size.x + player_view_rect.position.x
+    emit_signal("platformSpawned", player_view_name, x_beg, x_end, y_position)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
     var player_view_rect =  get_node("../PlayerView").background_rect
@@ -93,4 +112,7 @@ func _process(_delta):
         _spawn_new_platform("PlayerView")
         _spawn_new_platform("PlayerView2")
         last_platform_spawn_row_idx -= 2 # Set new row index two tows above
-
+        _emit_spawned_signal("PlayerView")
+        _emit_spawned_signal("PlayerView2")
+        
+        
