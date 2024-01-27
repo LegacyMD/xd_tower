@@ -3,10 +3,17 @@ extends CharacterBody2D
 # NOTE(mwk): for each player view, the index is hardcoded
 @export var player_idx : int
 
+signal score_changed(new_score)
+
 var horizontal_move_multiplier = 30
 var vertical_jump_multiplier = 950
 var vertical_fall_multiplier = 1000
 var gravity := 55
+
+var score := 0
+var min_platform_y = 100000 # Used to keep track of score
+const score_for_new_platform = 100
+const score_for_new_effect = 500
 
 func add_keyboard_mapping(action_name, keycode):
     var input_event_key = InputEventKey.new()
@@ -56,6 +63,9 @@ func _on_area_2d_body_entered(body):
     #print("JA PIERDOLE")
     pass
 
+func _process(delta):
+    _check_new_platform()
+
 func _physics_process(delta):
     velocity.y += gravity
 
@@ -89,3 +99,16 @@ func _physics_process(delta):
         velocity.y = max(velocity.y, 0)
 
     move_and_slide()
+
+func _check_new_platform():
+    if player_idx == 1:
+        return
+
+    if is_on_floor():
+        if (min_platform_y > global_position.y):
+            min_platform_y = global_position.y
+            add_score(score_for_new_platform)
+
+func add_score(value):
+    score += value
+    score_changed.emit(score)

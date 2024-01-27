@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://be1m1bli4kvxx"]
+[gd_scene load_steps=5 format=3 uid="uid://be1m1bli4kvxx"]
 
 [ext_resource type="PackedScene" uid="uid://c0df40lhsahqm" path="res://scenes/player_view.tscn" id="1_mew4d"]
 [ext_resource type="Texture2D" uid="uid://bnhppr88odaml" path="res://images/bg2.png" id="2_3fxt5"]
+[ext_resource type="Script" path="res://scenes/score_label.gd" id="2_exf4l"]
 [ext_resource type="PackedScene" uid="uid://dhnwcp01tc7x1" path="res://scenes/platform_spawner.tscn" id="3_ny1kp"]
 
 [node name="RootNode" type="Node2D"]
@@ -12,16 +13,19 @@ position = Vector2(-276, -14)
 [node name="Background" parent="PlayerView" index="0"]
 position = Vector2(0, 0)
 
+[node name="ScoreLabel" parent="PlayerView" index="4"]
+script = ExtResource("2_exf4l")
+
 [node name="PlayerView2" parent="." instance=ExtResource("1_mew4d")]
 position = Vector2(328, -14)
 
 [node name="Background" parent="PlayerView2" index="0"]
 texture = ExtResource("2_3fxt5")
 
-[node name="PlayerNameLabel" parent="PlayerView2" index="2"]
+[node name="PlayerNameLabel" parent="PlayerView2" index="3"]
 text = "Player 2"
 
-[node name="Player" parent="PlayerView2" index="4"]
+[node name="Player" parent="PlayerView2" index="5"]
 player_idx = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
