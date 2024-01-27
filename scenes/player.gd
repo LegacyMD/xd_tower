@@ -5,10 +5,10 @@ extends CharacterBody2D
 
 signal score_changed(new_score)
 
-var horizontal_move_multiplier = 30
-var vertical_jump_multiplier = 950
-var vertical_fall_multiplier = 1000
-var gravity := 55
+var horizontal_move_multiplier = 30000
+var vertical_jump_multiplier = 57000
+var vertical_fall_multiplier = 60000
+var gravity_multiplier = 3300
 
 var score := 0
 var min_platform_y = 100000 # Used to keep track of score
@@ -66,8 +66,8 @@ func _on_area_2d_body_entered(_body):
 func _process(_delta):
     _check_new_platform()
 
-func _physics_process(_delta):
-    velocity.y += gravity
+func _physics_process(delta):
+    velocity.y += delta * gravity_multiplier
 
     # mwk: player index -> player name -> player inputs
     var player_str = "%s%d" % ["player", player_idx]
@@ -78,7 +78,7 @@ func _physics_process(_delta):
 
     # mwk: calculate incidental velocity for left and right movements
     var horizontal_input := Input.get_action_strength(player_right) - Input.get_action_strength(player_left)
-    velocity.x += horizontal_input * horizontal_move_multiplier
+    velocity.x = delta * horizontal_input * horizontal_move_multiplier
     if horizontal_input > 0:
         velocity.x = max(velocity.x, 0)
     elif horizontal_input < 0:
@@ -86,8 +86,7 @@ func _physics_process(_delta):
 
     # mwk: handle jumping
     if Input.is_action_just_pressed(player_up) and is_on_floor():
-        velocity.y -= vertical_jump_multiplier
-
+        velocity.y -= delta * vertical_jump_multiplier
     # mdziuban: handle dropping down
     if Input.is_action_just_pressed(player_down):
         if is_on_floor():
@@ -95,7 +94,7 @@ func _physics_process(_delta):
             position.y += 5
 
         # Accelerate further down
-        velocity.y += vertical_fall_multiplier
+        velocity.y += delta * vertical_fall_multiplier
         velocity.y = max(velocity.y, 0)
 
     move_and_slide()
