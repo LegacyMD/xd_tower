@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c0df40lhsahqm" path="res://scenes/player_view.tscn" id="1_mew4d"]
 [ext_resource type="Texture2D" uid="uid://bnhppr88odaml" path="res://images/bg2.png" id="2_3fxt5"]
-[ext_resource type="PackedScene" uid="uid://dhnwcp01tc7x1" path="res://scenes/platform_spawner.tscn" id="3_ny1kp"]
+[ext_resource type="PackedScene" path="res://scenes/platform_spawner.tscn" id="3_ny1kp"]
 
 [node name="RootNode" type="Node2D"]
 
@@ -14,6 +14,9 @@ position = Vector2(328, -14)
 
 [node name="Background" parent="PlayerView2" index="0"]
 texture = ExtResource("2_3fxt5")
+
+[node name="Player" parent="PlayerView2" index="1"]
+player_idx = 1
 
 [node name="PlayerNameLabel" parent="PlayerView2" index="3"]
 text = "Player 2"
