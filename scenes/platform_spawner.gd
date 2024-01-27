@@ -86,6 +86,7 @@ func _init_platforms(player_view_name, tiles_dimensions, tile_size, player_view_
     for r in range(rows_number - 1, -1, -1):
         if r == rows_number - 1: # fill the first row to full capacity
             _fill_starting_platform_tiles(root, tile, tile_size, r, tiles_in_a_row, player_view_rect)
+            continue
         if r % 2: # Skip every second platform to leave blank rows between
             continue
         var size_and_offset = _generate_platform_size_and_offset(tiles_in_a_row)
