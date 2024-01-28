@@ -30,6 +30,10 @@ func _ready():
 
    # $AnimatedSprite2D.frame = effect_type * 1 # to cast enum to int I cannot use casting, but I can multiply by 1. WTF XD
 
+func _process(_delta):
+    if global_position.y > 1200:
+        queue_free()
+
 func _get_other_player_idx(player_idx: int) -> int:
     return not player_idx
 
