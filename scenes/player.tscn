@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cmsiiqo6trr02"]
+[gd_scene load_steps=11 format=3 uid="uid://cmsiiqo6trr02"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_vu3yy"]
 [ext_resource type="SpriteFrames" uid="uid://brtby3gs8upj6" path="res://spirte_animations/player2.tres" id="2_e8ge1"]
 [ext_resource type="AudioStream" uid="uid://cnpteux8jnhqw" path="res://sounds/jump1.wav" id="3_6kmp1"]
+[ext_resource type="AudioStream" uid="uid://bc84ogrj57ui0" path="res://sounds/anvil.wav" id="5_ogody"]
 [ext_resource type="AudioStream" uid="uid://cvawrsehu62pq" path="res://sounds/slap.wav" id="5_t0vyg"]
 
 [sub_resource type="Animation" id="Animation_twcw3"]
@@ -70,7 +71,7 @@ script = ExtResource("1_vu3yy")
 position = Vector2(-2, -15.5)
 scale = Vector2(0.16, 0.2025)
 sprite_frames = ExtResource("2_e8ge1")
-frame = 8
+frame = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -91,6 +92,7 @@ stream = ExtResource("3_6kmp1")
 volume_db = 3.0
 
 [node name="AnvilAudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ogody")
 
 [node name="SmackAudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_t0vyg")
