@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://g50wfi8uk4ch"]
+[gd_scene load_steps=7 format=3 uid="uid://g50wfi8uk4ch"]
 
 [ext_resource type="Script" path="res://game_over_menu.gd" id="1_rtca0"]
 [ext_resource type="Texture2D" uid="uid://cao44k0lrsftp" path="res://images/victory.png" id="2_jxqj8"]
+
+[sub_resource type="Animation" id="Animation_jqidt"]
+length = 0.001
 
 [sub_resource type="Animation" id="Animation_ueogs"]
 resource_name = "rotate"
@@ -31,14 +34,13 @@ tracks/1/keys = {
 "values": [0.0, 6.28319]
 }
 
-[sub_resource type="Animation" id="Animation_jqidt"]
-length = 0.001
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6d7ba"]
 _data = {
 "RESET": SubResource("Animation_jqidt"),
 "rotate": SubResource("Animation_ueogs")
 }
+
+[sub_resource type="SystemFont" id="SystemFont_jjqke"]
 
 [node name="GameOverMenu" type="Control"]
 layout_mode = 3
@@ -87,6 +89,7 @@ grow_vertical = 2
 
 [node name="GameOverLabel" type="Label" parent="GridContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 64
 text = "Game over!"
 
@@ -98,8 +101,9 @@ text = "Placeholder"
 
 [node name="ResumeButton" type="Button" parent="GridContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Resume"
+theme_override_fonts/font = SubResource("SystemFont_jjqke")
+theme_override_font_sizes/font_size = 24
+text = "Segmentation fault (core dumped)"
 
 [node name="RestartButton" type="Button" parent="GridContainer"]
 layout_mode = 2
