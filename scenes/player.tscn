@@ -1,7 +1,86 @@
-[gd_scene load_steps=4 format=3 uid="uid://cmsiiqo6trr02"]
+[gd_scene load_steps=15 format=3 uid="uid://cmsiiqo6trr02"]
 
 [ext_resource type="Texture2D" uid="uid://dc1qxcwm6qwx2" path="res://images/icon.svg" id="1_0sng1"]
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_vu3yy"]
+[ext_resource type="Texture2D" uid="uid://dg8bi7x7uvne0" path="res://images/sheet_frog.png" id="2_hnxpb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1o4o0"]
+atlas = ExtResource("2_hnxpb")
+region = Rect2(0, 0, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mhis3"]
+atlas = ExtResource("2_hnxpb")
+region = Rect2(400, 0, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkytg"]
+atlas = ExtResource("2_hnxpb")
+region = Rect2(800, 0, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mn75f"]
+atlas = ExtResource("2_hnxpb")
+region = Rect2(0, 400, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmqu1"]
+atlas = ExtResource("2_hnxpb")
+region = Rect2(400, 400, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3lw0"]
+atlas = ExtResource("2_hnxpb")
+region = Rect2(800, 400, 400, 400)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyimv"]
+atlas = ExtResource("2_hnxpb")
+region = Rect2(0, 800, 400, 400)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p04qr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1o4o0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mhis3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkytg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mn75f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tmqu1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x3lw0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyimv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_bkp6v"]
+resource_name = "jump_start"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0, 1, 2, 3, 4, 5, 6, 6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1n7w0"]
+_data = {
+"jump_start": SubResource("Animation_bkp6v")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fvmdj"]
 size = Vector2(57, 65)
@@ -10,7 +89,20 @@ size = Vector2(57, 65)
 collision_mask = 38
 script = ExtResource("1_vu3yy")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-2, -15.5)
+scale = Vector2(0.16, 0.2025)
+sprite_frames = SubResource("SpriteFrames_p04qr")
+frame = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1n7w0")
+}
+speed_scale = 2.765
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 scale = Vector2(0.352305, 0.387535)
 texture = ExtResource("1_0sng1")
 

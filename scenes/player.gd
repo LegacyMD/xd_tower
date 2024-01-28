@@ -89,8 +89,13 @@ func _process_normal_physics(delta):
     var horizontal_input := Input.get_action_strength(player_right) - Input.get_action_strength(player_left)
     velocity.x = delta * horizontal_input * horizontal_move_multiplier
 
+    if is_on_floor():
+        $AnimationPlayer.stop()
+        $AnimatedSprite2D.frame = 0
+
     # mwk: handle jumping
     if Input.is_action_just_pressed(player_up) and is_on_floor():
+        $AnimationPlayer.play("jump_start")
         velocity.y -= delta * vertical_jump_multiplier
     # mdziuban: handle dropping down
     if Input.is_action_just_pressed(player_down):
