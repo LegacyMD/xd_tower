@@ -4,6 +4,21 @@
 [ext_resource type="SpriteFrames" uid="uid://brtby3gs8upj6" path="res://spirte_animations/player2.tres" id="2_e8ge1"]
 [ext_resource type="AudioStream" uid="uid://cnpteux8jnhqw" path="res://sounds/jump1_short.wav" id="3_xjgyu"]
 
+[sub_resource type="Animation" id="Animation_twcw3"]
+resource_name = "anvil_hit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [7, 11]
+}
+
 [sub_resource type="Animation" id="Animation_bkp6v"]
 resource_name = "jump_start"
 length = 0.8
@@ -20,21 +35,6 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 6]
 }
 
-[sub_resource type="Animation" id="Animation_twcw3"]
-resource_name = "anvil_hit"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.2, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [7, 11]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1n7w0"]
 _data = {
 "anvil_hit": SubResource("Animation_twcw3"),
@@ -45,7 +45,7 @@ _data = {
 size = Vector2(57, 65)
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 38
+collision_mask = 166
 script = ExtResource("1_vu3yy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

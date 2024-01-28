@@ -26,7 +26,7 @@ position = Vector2(328, -14)
 [node name="Background" parent="PlayerView2" index="0"]
 texture = ExtResource("2_3fxt5")
 
-[node name="Player" parent="PlayerView2" index="4"]
+[node name="Player" parent="PlayerView2" index="5"]
 player_idx = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]

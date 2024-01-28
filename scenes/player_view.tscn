@@ -1,10 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://c0df40lhsahqm"]
+[gd_scene load_steps=9 format=3 uid="uid://c0df40lhsahqm"]
 
 [ext_resource type="Texture2D" uid="uid://k56ue13rongu" path="res://images/bg1.png" id="1_g4c12"]
 [ext_resource type="Script" path="res://scenes/player_view.gd" id="1_hdgho"]
 [ext_resource type="PackedScene" uid="uid://cmsiiqo6trr02" path="res://scenes/player.tscn" id="1_wpenj"]
 [ext_resource type="FontFile" uid="uid://1a64xqtvvu7t" path="res://fonts/COMIC.TTF" id="3_3bjkn"]
 [ext_resource type="Script" path="res://scenes/score_label.gd" id="4_25gyq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rrysx"]
+size = Vector2(553, 125)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d1cn2"]
 size = Vector2(964.211, 176.711)
@@ -23,12 +26,20 @@ texture = ExtResource("1_g4c12")
 [node name="PlatformContainer" type="Node2D" parent="."]
 position = Vector2(2, 3)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="ScrollBoostArea2D" type="Area2D" parent="."]
+collision_layer = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScrollBoostArea2D"]
+position = Vector2(-0.5, -250.5)
+shape = SubResource("RectangleShape2D_rrysx")
+debug_color = Color(0.94902, 0, 0.568627, 0.419608)
+
+[node name="FailureArea2D" type="Area2D" parent="."]
 position = Vector2(1.99994, 337)
 scale = Vector2(0.591111, 0.591111)
 collision_layer = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FailureArea2D"]
 position = Vector2(0.0377138, 65.5922)
 shape = SubResource("RectangleShape2D_d1cn2")
 
@@ -64,9 +75,11 @@ position = Vector2(-264, -668)
 scale = Vector2(0.939083, 7.31806)
 shape = SubResource("RectangleShape2D_8ajvc")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="Area2D" to="Player" method="_on_area_2d_body_entered"]
-[connection signal="tree_entered" from="Area2D/CollisionShape2D" to="Player" method="_on_collision_shape_2d_tree_entered"]
+[connection signal="body_shape_entered" from="ScrollBoostArea2D" to="." method="_on_player_enter_scroll_boost"]
+[connection signal="body_shape_exited" from="ScrollBoostArea2D" to="." method="_on_player_exit_scroll_boost"]
+[connection signal="body_entered" from="FailureArea2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="FailureArea2D" to="Player" method="_on_area_2d_body_entered"]
+[connection signal="tree_entered" from="FailureArea2D/CollisionShape2D" to="Player" method="_on_collision_shape_2d_tree_entered"]
 [connection signal="score_changed" from="Player" to="ScoreLabel" method="_on_player_score_changed"]
 
 [editable path="Player"]
