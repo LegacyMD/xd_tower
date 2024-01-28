@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var background_rect = $Background.get_rect()
+var the_other_view = null
 
 var scroll_speed = 60
 

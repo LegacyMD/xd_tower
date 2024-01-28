@@ -21,6 +21,12 @@ const score_for_new_effect = 500
 
 var active_effect = Effect.EffectType.None
 
+func connect_gathered_signal(gathered_signal):
+    gathered_signal.connect(_on_effect_gathered)
+
+func connect_inflict_signal(inflict_signal):
+    inflict_signal.connect(_on_effect_inflicted)
+
 func _input(event):
     var just_pressed = event.is_pressed() and not event.is_echo()
     if Input.is_key_pressed(KEY_R) and just_pressed:
@@ -100,6 +106,17 @@ func _check_new_platform():
 func add_score(value):
     score += value
     score_changed.emit(score)
+
+func _on_effect_gathered(affected_player_idx : int):
+    # If the player isn't the affected one, skip
+    if player_idx != affected_player_idx:
+        return
+    add_score(500)
+
+func _on_effect_inflicted(affected_player_idx : int, effect : Effect.EffectType):
+    if player_idx != affected_player_idx:
+        return
+    _enable_effect(effect)
 
 func _enable_effect(effect : Effect.EffectType):
     active_effect = effect
