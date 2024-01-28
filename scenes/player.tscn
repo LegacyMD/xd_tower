@@ -70,7 +70,7 @@ script = ExtResource("1_vu3yy")
 position = Vector2(-2, -15.5)
 scale = Vector2(0.16, 0.2025)
 sprite_frames = ExtResource("2_e8ge1")
-frame = 7
+frame = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -93,5 +93,9 @@ volume_db = 3.0
 [node name="BackgroundAudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_x11g7")
 volume_db = -9.0
+
+[node name="AnvilAudioPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="SmackAudioPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="timeout" from="EffectEndTimer" to="." method="_disable_effect"]

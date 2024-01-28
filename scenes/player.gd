@@ -104,6 +104,7 @@ func _spawn_slap_anim():
     instance.find_child("Sprite2D").z_index = 2
     instance.find_child("AnimationPlayer").play("slap")
     enemy.add_child(instance)
+    $SmackAudioPlayer.play()
 
 func _process_slapping_slapping_physics(delta):
     velocity = Vector2.ZERO
@@ -215,6 +216,7 @@ func spawn_anvil():
 
 func _on_anvil_instance():
     $AnimationPlayer.play("anvil_hit")
+    $AnvilAudioPlayer.play()
 
 func _on_effect_gathered(affected_player_idx : int, effect : Effect.EffectType):
     # If the player isn't the affected one, skip
