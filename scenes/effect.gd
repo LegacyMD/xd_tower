@@ -25,5 +25,5 @@ func _on_player_entered(body):
 
     var effect_type = _pick_random_effect()
     effectGathered.emit(player_idx)
-    effectInflicted.emit(enemy_player_idx, EffectType.SmashWithBlock)
+    effectInflicted.emit(enemy_player_idx, effect_type)
     queue_free() # Remove from the tree
