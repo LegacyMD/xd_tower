@@ -6,6 +6,7 @@ const collision_layer_obstacle_full := (1 << 4)
 
 # NOTE(mwk): for each player view, the index is hardcoded
 @export var player_idx : int
+var enemy = null
 
 signal score_changed(new_score)
 
@@ -20,9 +21,19 @@ const score_for_new_platform = 100
 const score_for_new_effect = 500
 
 var active_effect = Effect.EffectType.None
+var active_slapping_state := SlappingStates.None
 
 var bounce_velocity_start =  Vector2(-5000, -3000)
 var bounce_velocity_damp = 0.95
+
+var position_before_slap = null
+
+enum SlappingStates {
+    None,
+    Approaching,
+    Slapping,
+    Returning
+}
 
 func connect_gathered_signal(gathered_signal):
     gathered_signal.connect(_on_effect_gathered)
@@ -57,8 +68,61 @@ func _physics_process(delta):
         _process_bounce_effect_physics(delta)
     elif active_effect == Effect.EffectType.SmashWithBlock:
         _process_smash_with_block_effect_physics(delta)
+    elif active_effect == Effect.EffectType.Slapping:
+        _process_slapping_physics(delta)
+    elif active_effect == Effect.EffectType.BeingSlapped:
+        _process_being_slapped_physics(delta)
     else:
         _process_normal_physics(delta)
+
+func _process_slapping_approaching_physics(delta):
+    const speed = 500.0
+    var distance = enemy.global_position - global_position
+    var direction = distance.normalized()
+
+    # Use look_at() to point towards the target
+    look_at(enemy.global_position)
+
+    # Move towards the target
+    translate(direction * speed * delta)
+    rotation_degrees = 0.0
+    if distance.length() < 64:
+        active_slapping_state = SlappingStates.Slapping
+        print("Beginning to slap")
+
+func _process_slapping_slapping_physics(delta):
+    velocity = Vector2.ZERO
+    active_slapping_state = SlappingStates.Returning
+    pass
+
+func _process_slapping_returning_physics(delta):
+    const speed = 500.0
+    var distance = position_before_slap - global_position
+    var direction = distance.normalized()
+
+    # Use look_at() to point towards the target
+    look_at(position_before_slap)
+
+    # Move towards the target
+    translate(direction * speed * delta)
+    rotation_degrees = 0.0
+    if distance.length() < 64:
+        $EffectEndTimer.stop()
+        _disable_effect()
+        print("Stopping returning state")
+
+func _process_slapping_physics(delta):
+    if active_slapping_state == SlappingStates.Approaching:
+        _process_slapping_approaching_physics(delta)
+    elif active_slapping_state == SlappingStates.Slapping:
+        _process_slapping_slapping_physics(delta)
+    elif active_slapping_state == SlappingStates.Returning:
+        _process_slapping_returning_physics(delta)
+
+
+
+func _process_being_slapped_physics(delta):
+    pass
 
 func _process_bounce_effect_physics(delta):
     var collision : KinematicCollision2D = move_and_collide(velocity * delta)
@@ -137,11 +201,12 @@ func spawn_anvil():
 func _on_anvil_instance():
     $AnimationPlayer.play("anvil_hit")
 
-func _on_effect_gathered(affected_player_idx : int):
+func _on_effect_gathered(affected_player_idx : int, effect : Effect.EffectType):
     # If the player isn't the affected one, skip
     if player_idx != affected_player_idx:
         return
     add_score(500)
+    _enable_effect(effect)
 
 func _on_effect_inflicted(affected_player_idx : int, effect : Effect.EffectType):
     if player_idx != affected_player_idx:
@@ -164,6 +229,13 @@ func _enable_effect(effect : Effect.EffectType):
     elif effect == Effect.EffectType.TwistMovingDirections:
         horizontal_move_multiplier = -horizontal_move_multiplier
         $EffectEndTimer.wait_time = 5.0
+    elif effect == Effect.EffectType.BeingSlapped:
+        $EffectEndTimer.wait_time = 5.0
+    elif effect == Effect.EffectType.Slapping:
+        $EffectEndTimer.wait_time = 3.0
+        active_slapping_state = SlappingStates.Approaching
+        position_before_slap = global_position
+
     else:
         print("WARNING: _enable_effect() called with unsupported effect type. Wtf?")
 
@@ -181,6 +253,15 @@ func _disable_effect():
         $AnimatedSprite2D.frame = 0
     elif active_effect == Effect.EffectType.TwistMovingDirections:
         horizontal_move_multiplier = -horizontal_move_multiplier
+    elif active_effect == Effect.EffectType.BeingSlapped:
+        pass
+    elif active_effect == Effect.EffectType.Slapping:
+        active_effect = Effect.EffectType.None
+        active_slapping_state = SlappingStates.None
+        enemy.active_effect = Effect.EffectType.None
+        enemy.active_slapping_state = SlappingStates.None
+        velocity = Vector2.ZERO
+        pass
     else:
         print("WARNING: _disable_effect() called on unsupported effect type. Wtf?")
 

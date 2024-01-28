@@ -2,21 +2,23 @@ extends Node2D
 
 class_name Effect
 
-signal effectGathered(affected_player_idx : int)
+signal effectGathered(affected_player_idx : int, effect : Effect.EffectType)
 signal effectInflicted(affected_player_idx : int, effect : Effect.EffectType)
 
 enum EffectType {
     None,
     Bounce,
     SmashWithBlock,
-    TwistMovingDirections
+    TwistMovingDirections,
+    BeingSlapped,
+    Slapping
 }
 
 func _get_other_player_idx(player_idx: int) -> int:
     return not player_idx
 
 func _pick_random_effect() -> EffectType:
-    return (randi() % EffectType.size()) as EffectType
+    return (randi() % (EffectType.size() - 1)) as EffectType
 
 func _on_player_entered(body):
     var player_idx = body.player_idx
@@ -24,6 +26,9 @@ func _on_player_entered(body):
     print("Player %d gathered effect" % player_idx)
 
     var effect_type = _pick_random_effect()
-    effectGathered.emit(player_idx)
+    if effect_type == EffectType.BeingSlapped:
+        effectGathered.emit(player_idx, EffectType.Slapping)
+    else:
+        effectGathered.emit(player_idx, EffectType.None)
     effectInflicted.emit(enemy_player_idx, effect_type)
     queue_free() # Remove from the tree

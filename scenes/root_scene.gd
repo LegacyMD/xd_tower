@@ -4,6 +4,9 @@ func _ready():
     $PlayerView.the_other_view = $PlayerView2
     $PlayerView2.the_other_view = $PlayerView
 
+    $PlayerView/Player.enemy = $PlayerView2/Player
+    $PlayerView2/Player.enemy = $PlayerView/Player
+    
     get_tree().get_root().size_changed.connect(resize)
     resize()
 
