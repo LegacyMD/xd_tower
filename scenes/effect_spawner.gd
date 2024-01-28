@@ -11,6 +11,11 @@ func _on_platform_spawner_platform_spawned(view_name, x_beg, x_end, y_position):
     if not _should_spawn():
         return
 
+    # Remove left and right parts of the view so that the frog doesn't get stuck
+    # in the wall after a slap effect
+    x_beg += Settings.EFFECT_SPAWN_MARGIN
+    x_end -= Settings.EFFECT_SPAWN_MARGIN
+
     var effect = preload("res://scenes/effect.tscn")
     var view = get_node("../%s" % view_name)
 

@@ -3,6 +3,7 @@ extends CharacterBody2D
 # TODO move this to some shared place
 const collision_layer_obstacle := (1 << 1)
 const collision_layer_obstacle_full := (1 << 4)
+const collision_layer_effect_full := (1 << 3)
 
 # NOTE(mwk): for each player view, the index is hardcoded
 @export var player_idx : int
@@ -76,6 +77,8 @@ func _physics_process(delta):
         _process_normal_physics(delta)
 
 func _process_slapping_approaching_physics(delta):
+    $AnimationPlayer.play("run")
+    $AnimatedSprite2D.flip_h = velocity.x > 0
     const speed = 500.0
     var distance = enemy.global_position - global_position
     var direction = distance.normalized()
@@ -93,8 +96,16 @@ func _process_slapping_approaching_physics(delta):
 func _process_being_slapped_physics(_delta):
     pass
 
-func _process_slapping_slapping_physics(_delta):
+func _spawn_slap_anim():
+    var slap_anim_scene = preload("res://scenes/slap_animation.tscn")
+    var instance = slap_anim_scene.instantiate()
+    instance.find_child("Sprite2D").z_index = 2
+    instance.find_child("AnimationPlayer").play("slap")
+    enemy.add_child(instance)
+
+func _process_slapping_slapping_physics(delta):
     velocity = Vector2.ZERO
+    _spawn_slap_anim()
     active_slapping_state = SlappingStates.Returning
     pass
 
@@ -216,6 +227,8 @@ func _on_effect_inflicted(affected_player_idx : int, effect : Effect.EffectType)
     _enable_effect(effect)
 
 func _enable_effect(effect : Effect.EffectType):
+    if active_effect != Effect.EffectType.None:
+        return
     active_effect = effect
 
     if effect == Effect.EffectType.None:
@@ -235,7 +248,9 @@ func _enable_effect(effect : Effect.EffectType):
         $EffectEndTimer.wait_time = 5.0
     elif effect == Effect.EffectType.BeingSlapped:
         $EffectEndTimer.wait_time = 5.0
+        collision_mask &= (~collision_layer_effect_full)
     elif effect == Effect.EffectType.Slapping:
+        collision_mask &= (~collision_layer_effect_full)
         $EffectEndTimer.wait_time = 3.0
         active_slapping_state = SlappingStates.Approaching
         position_before_slap = global_position
@@ -260,8 +275,9 @@ func _disable_effect():
     elif active_effect == Effect.EffectType.TwistMovingDirections:
         horizontal_move_multiplier = abs(horizontal_move_multiplier)
     elif active_effect == Effect.EffectType.BeingSlapped:
-        pass
+        collision_mask |= collision_layer_effect_full
     elif active_effect == Effect.EffectType.Slapping:
+        collision_mask |= collision_layer_effect_full
         active_effect = Effect.EffectType.None
         active_slapping_state = SlappingStates.None
         enemy.active_effect = Effect.EffectType.None
