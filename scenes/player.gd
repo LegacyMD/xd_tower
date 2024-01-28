@@ -43,8 +43,19 @@ signal push_player_idx(player_idx)
 func _on_area_2d_body_entered(_body):
     push_player_idx.emit(player_idx)
 
+# NOTE(mwk): jesus fucking christ I am sorry
+var target_rotation = 0
+var rotation_speed = 4.20
+
 func _process(_delta):
     _check_new_platform()
+
+    # mwk: anvil hit leaves us in rotation != 0 state, usually
+    if should_rotate == false && rotation != 0:
+        var current_rotation = rotation
+        rotation += min(rotation_speed * _delta, abs(target_rotation - current_rotation)) * sign(target_rotation - current_rotation)
+        if abs(rotation - target_rotation) < 0.01: # Threshold to stop rotation
+            rotation = target_rotation
 
     # Debug code to test effects
     if Input.is_action_just_pressed("ui_home"):
@@ -174,7 +185,6 @@ func _enable_effect(effect : Effect.EffectType):
         print("WARNING: _enable_effect() called with unsupported effect type. Wtf?")
 
     $EffectEndTimer.start()
-
 
 func _disable_effect():
     if active_effect == Effect.EffectType.Bounce:
