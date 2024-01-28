@@ -6,6 +6,11 @@ var paused : bool = false:
 func _input(event : InputEvent):
     if event.is_action_pressed("ui_cancel"):
         paused = !paused
+    var just_pressed = event.is_pressed() and not event.is_echo()
+    if (Input.is_key_pressed(KEY_R) or
+        Input.is_joy_button_pressed(0, JOY_BUTTON_BACK) or
+        Input.is_joy_button_pressed(1, JOY_BUTTON_BACK)) and just_pressed:
+        get_tree().reload_current_scene()
 
 func paused_from_value(v : bool):
     paused = v

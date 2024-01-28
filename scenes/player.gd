@@ -44,7 +44,9 @@ func connect_inflict_signal(inflict_signal):
 
 func _input(event):
     var just_pressed = event.is_pressed() and not event.is_echo()
-    if Input.is_key_pressed(KEY_R) and just_pressed:
+    if (Input.is_key_pressed(KEY_R) or
+        Input.is_joy_button_pressed(0, JOY_BUTTON_BACK) or
+        Input.is_joy_button_pressed(1, JOY_BUTTON_BACK)) and just_pressed:
         get_tree().reload_current_scene()
 
 func _ready():

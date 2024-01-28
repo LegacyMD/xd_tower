@@ -41,6 +41,7 @@ _data = {
 }
 
 [sub_resource type="SystemFont" id="SystemFont_jjqke"]
+subpixel_positioning = 0
 
 [node name="GameOverMenu" type="Control"]
 layout_mode = 3
