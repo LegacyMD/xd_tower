@@ -16,9 +16,6 @@ func _ready():
     paused = false
     visible = false
 
-func _process(delta):
-    pass
-
 func _on_resume_button_pressed():
     paused = false
 

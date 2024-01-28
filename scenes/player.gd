@@ -90,7 +90,10 @@ func _process_slapping_approaching_physics(delta):
         active_slapping_state = SlappingStates.Slapping
         print("Beginning to slap")
 
-func _process_slapping_slapping_physics(delta):
+func _process_being_slapped_physics(_delta):
+    pass
+
+func _process_slapping_slapping_physics(_delta):
     velocity = Vector2.ZERO
     active_slapping_state = SlappingStates.Returning
     pass
@@ -119,11 +122,6 @@ func _process_slapping_physics(delta):
     elif active_slapping_state == SlappingStates.Returning:
         _process_slapping_returning_physics(delta)
 
-
-
-func _process_being_slapped_physics(delta):
-    pass
-
 func _process_bounce_effect_physics(delta):
     var collision : KinematicCollision2D = move_and_collide(velocity * delta)
     if collision:
@@ -140,7 +138,7 @@ func calculate_required_angle_in_radians(remaining_time: float, total_duration: 
     var required_angle_in_radians: float = proportion * 2 * PI
     return required_angle_in_radians
 
-func _process_smash_with_block_effect_physics(delta):
+func _process_smash_with_block_effect_physics(_delta):
     position.y += 1
 
 func _process_normal_physics(delta):
@@ -198,7 +196,7 @@ func spawn_anvil():
     var anvil_scene = preload("res://scenes/anvil.tscn")
     var anvil_instance = anvil_scene.instantiate()
     anvil_instance.pushAnvilCollided.connect(_on_anvil_instance)
-    add_child(anvil_instance)
+    add_child.call_deferred(anvil_instance)
     anvil_instance.position.x = 0
     anvil_instance.position.y = -133.7
 
@@ -260,7 +258,7 @@ func _disable_effect():
         $AnimationPlayer.stop()
         $AnimatedSprite2D.frame = 0
     elif active_effect == Effect.EffectType.TwistMovingDirections:
-        horizontal_move_multiplier = -horizontal_move_multiplier
+        horizontal_move_multiplier = abs(horizontal_move_multiplier)
     elif active_effect == Effect.EffectType.BeingSlapped:
         pass
     elif active_effect == Effect.EffectType.Slapping:

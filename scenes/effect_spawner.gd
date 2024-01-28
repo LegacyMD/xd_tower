@@ -1,15 +1,11 @@
 extends Node2D
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-    pass
-
 func _should_spawn():
     return randf() <= Settings.EFFECT_SPAWN_CHANCE
 
 func _generate_x_pos(x_beg, x_end):
-    var range = x_end - x_beg
-    return randf() * range + x_beg
+    var spawn_range = x_end - x_beg
+    return randf() * spawn_range + x_beg
 
 func _on_platform_spawner_platform_spawned(view_name, x_beg, x_end, y_position):
     if not _should_spawn():

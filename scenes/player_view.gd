@@ -17,7 +17,7 @@ func _process(delta):
         increment *= scroll_speed_boost
     $PlatformContainer.position.y += increment
 
-func _on_player_enter_scroll_boost(body_rid, body, body_shape_index, local_shape_index):
+func _on_player_enter_scroll_boost(_body_rid, body, _body_shape_index, _local_shape_index):
     # Check if this is our player
     if body.player_idx != $Player.player_idx:
         return
@@ -25,7 +25,7 @@ func _on_player_enter_scroll_boost(body_rid, body, body_shape_index, local_shape
     scroll_speed_boost_active = true
 
 
-func _on_player_exit_scroll_boost(body_rid, body, body_shape_index, local_shape_index):
+func _on_player_exit_scroll_boost(_body_rid, body, _body_shape_index, _local_shape_index):
     # Check if this is our player
     if body.player_idx != $Player.player_idx:
         return

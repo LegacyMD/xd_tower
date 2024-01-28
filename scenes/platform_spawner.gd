@@ -28,9 +28,9 @@ func _pixel_pos_from_column_row(column, row, tile_size, player_view_rect):
 
 func _create_tile(tile_scene, column, row, tile_size, player_view_rect, index_in_row, tiles_in_a_row):
     var instance = tile_scene.instantiate()
-    var position = _pixel_pos_from_column_row(column, row, tile_size, player_view_rect)
-    instance.position.x = position.x
-    instance.position.y = position.y
+    var pixel_position = _pixel_pos_from_column_row(column, row, tile_size, player_view_rect)
+    instance.position.x = pixel_position.x
+    instance.position.y = pixel_position.y
     instance.name = "PlatformTile_x%d_y%d" % [column, row]
 
     if index_in_row == 0:
@@ -119,8 +119,8 @@ func _emit_spawned_signal(player_view_name, last_platform_spawn_row_idx):
     var tile_size = _compute_tile_size(player_view_rect)
     var row = last_platform_spawn_row_idx - 1
     var column = 0
-    var position = _pixel_pos_from_column_row(column, row, tile_size, player_view_rect)
-    var y_position = position.y
+    var pixel_position = _pixel_pos_from_column_row(column, row, tile_size, player_view_rect)
+    var y_position = pixel_position.y
     var x_beg = player_view_rect.position.x
     var x_end = player_view_rect.size.x + player_view_rect.position.x
     emit_signal("platformSpawned", player_view_name, x_beg, x_end, y_position)
