@@ -49,9 +49,6 @@ func _input(event):
         Input.is_joy_button_pressed(1, JOY_BUTTON_BACK)) and just_pressed:
         get_tree().reload_current_scene()
 
-func _ready():
-    $BackgroundAudioPlayer.play()
-
 signal push_player_idx(player_idx)
 
 func _on_area_2d_body_entered(_body):

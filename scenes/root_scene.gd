@@ -1,6 +1,8 @@
 extends Node2D
 
 func _ready():
+    $BackgroundAudioPlayer.play()
+
     $PlayerView.the_other_view = $PlayerView2
     $PlayerView2.the_other_view = $PlayerView
 

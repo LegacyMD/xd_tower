@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://be1m1bli4kvxx"]
+[gd_scene load_steps=9 format=3 uid="uid://be1m1bli4kvxx"]
 
 [ext_resource type="PackedScene" uid="uid://c0df40lhsahqm" path="res://scenes/player_view.tscn" id="1_mew4d"]
 [ext_resource type="Script" path="res://scenes/root_scene.gd" id="1_rdk11"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dhnwcp01tc7x1" path="res://scenes/platform_spawner.tscn" id="3_ny1kp"]
 [ext_resource type="PackedScene" uid="uid://bmr6jpswwvdri" path="res://scenes/effect_spawner.tscn" id="4_6w6mx"]
 [ext_resource type="PackedScene" uid="uid://g50wfi8uk4ch" path="res://game_over_menu.tscn" id="4_ah2uk"]
+[ext_resource type="AudioStream" uid="uid://dodo5mselrn3p" path="res://sounds/background.wav" id="8_hpmgu"]
 
 [node name="RootNode" type="Node2D"]
 script = ExtResource("1_rdk11")
@@ -43,6 +44,10 @@ zoom = Vector2(0.97, 0.97)
 process_mode = 3
 
 [node name="EffectSpawner" parent="." instance=ExtResource("4_6w6mx")]
+
+[node name="BackgroundAudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_hpmgu")
+volume_db = -9.0
 
 [connection signal="push_player_idx" from="PlayerView/Player" to="CanvasLayer/GameOverMenu" method="_on_player_push_player_idx"]
 [connection signal="push_player_idx" from="PlayerView2/Player" to="CanvasLayer/GameOverMenu" method="_on_player_push_player_idx"]

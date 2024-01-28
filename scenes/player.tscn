@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_vu3yy"]
 [ext_resource type="SpriteFrames" uid="uid://brtby3gs8upj6" path="res://spirte_animations/player2.tres" id="2_e8ge1"]
 [ext_resource type="AudioStream" uid="uid://cnpteux8jnhqw" path="res://sounds/jump1.wav" id="3_6kmp1"]
-[ext_resource type="AudioStream" uid="uid://dodo5mselrn3p" path="res://sounds/background.wav" id="4_x11g7"]
+[ext_resource type="AudioStream" uid="uid://cvawrsehu62pq" path="res://sounds/slap.wav" id="5_t0vyg"]
 
 [sub_resource type="Animation" id="Animation_twcw3"]
 resource_name = "anvil_hit"
@@ -90,12 +90,9 @@ one_shot = true
 stream = ExtResource("3_6kmp1")
 volume_db = 3.0
 
-[node name="BackgroundAudioPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_x11g7")
-volume_db = -9.0
-
 [node name="AnvilAudioPlayer" type="AudioStreamPlayer" parent="."]
 
 [node name="SmackAudioPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_t0vyg")
 
 [connection signal="timeout" from="EffectEndTimer" to="." method="_disable_effect"]
