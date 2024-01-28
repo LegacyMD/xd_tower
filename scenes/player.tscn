@@ -70,7 +70,7 @@ script = ExtResource("1_vu3yy")
 position = Vector2(-2, -15.5)
 scale = Vector2(0.16, 0.2025)
 sprite_frames = ExtResource("2_e8ge1")
-frame = 8
+frame = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

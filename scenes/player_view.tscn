@@ -1,10 +1,15 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0df40lhsahqm"]
+[gd_scene load_steps=22 format=3 uid="uid://c0df40lhsahqm"]
 
 [ext_resource type="Texture2D" uid="uid://k56ue13rongu" path="res://images/bg1.png" id="1_g4c12"]
 [ext_resource type="Script" path="res://scenes/player_view.gd" id="1_hdgho"]
 [ext_resource type="PackedScene" uid="uid://cmsiiqo6trr02" path="res://scenes/player.tscn" id="1_wpenj"]
+[ext_resource type="Texture2D" uid="uid://5tqalom8010o" path="res://images/kowadlo_action.png" id="2_2ap7r"]
 [ext_resource type="FontFile" uid="uid://1a64xqtvvu7t" path="res://fonts/COMIC.TTF" id="3_3bjkn"]
+[ext_resource type="Texture2D" uid="uid://bk4i1lf626bfr" path="res://images/tornado.png" id="3_7jvyy"]
 [ext_resource type="Script" path="res://scenes/score_label.gd" id="4_25gyq"]
+[ext_resource type="Texture2D" uid="uid://t65mfw1rxrmy" path="res://images/SLAAP!_sfx.png" id="4_b7663"]
+[ext_resource type="Texture2D" uid="uid://cjiwvkn3dct1e" path="res://images/left_right_swap.png" id="5_1dno1"]
+[ext_resource type="Script" path="res://scenes/active_effect_icon.gd" id="10_yimle"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rrysx"]
 size = Vector2(553, 125)
@@ -14,6 +19,80 @@ size = Vector2(964.211, 176.711)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ajvc"]
 size = Vector2(11, 3710)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2d8cc"]
+atlas = ExtResource("2_2ap7r")
+region = Rect2(0, 0, 221, 220)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kylqf"]
+atlas = ExtResource("3_7jvyy")
+region = Rect2(0, 0, 233, 251)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkt2q"]
+atlas = ExtResource("4_b7663")
+region = Rect2(0, 0, 238, 213)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_407v1"]
+atlas = ExtResource("5_1dno1")
+region = Rect2(0, 0, 240, 216)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_64utd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2d8cc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kylqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kkt2q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_407v1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_72ng1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ActiveEffectIcon:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_2a1xp"]
+resource_name = "flicker"
+length = 1.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ActiveEffectIcon:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7, 1.1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qabkk"]
+_data = {
+"RESET": SubResource("Animation_72ng1"),
+"flicker": SubResource("Animation_2a1xp")
+}
 
 [node name="PlayerView" type="Node2D"]
 script = ExtResource("1_hdgho")
@@ -75,11 +154,28 @@ position = Vector2(-264, -668)
 scale = Vector2(0.939083, 7.31806)
 shape = SubResource("RectangleShape2D_8ajvc")
 
+[node name="ActiveEffectIcon" type="AnimatedSprite2D" parent="."]
+position = Vector2(-205.75, -253)
+scale = Vector2(0.604072, 0.536364)
+sprite_frames = SubResource("SpriteFrames_64utd")
+script = ExtResource("10_yimle")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ActiveEffectIcon"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_qabkk")
+}
+speed_scale = 1.267
+
+[node name="Timer" type="Timer" parent="ActiveEffectIcon"]
+wait_time = 3.0
+
 [connection signal="body_shape_entered" from="ScrollBoostArea2D" to="." method="_on_player_enter_scroll_boost"]
 [connection signal="body_shape_exited" from="ScrollBoostArea2D" to="." method="_on_player_exit_scroll_boost"]
 [connection signal="body_entered" from="FailureArea2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="FailureArea2D" to="Player" method="_on_area_2d_body_entered"]
 [connection signal="tree_entered" from="FailureArea2D/CollisionShape2D" to="Player" method="_on_collision_shape_2d_tree_entered"]
 [connection signal="score_changed" from="Player" to="ScoreLabel" method="_on_player_score_changed"]
+[connection signal="timeout" from="ActiveEffectIcon/Timer" to="ActiveEffectIcon" method="_on_timer_timeout"]
 
 [editable path="Player"]
