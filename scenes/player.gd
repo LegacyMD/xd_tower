@@ -72,8 +72,16 @@ func _process_bounce_effect_physics(delta):
         velocity = velocity.reflect(normal)
         velocity *= bounce_velocity_damp
 
+func calculate_required_angle_in_radians(remaining_time: float, total_duration: float) -> float:
+    var proportion: float = remaining_time / total_duration
+    var required_angle_in_radians: float = proportion * 2 * PI
+    return required_angle_in_radians
+
 func _process_smash_with_block_effect_physics(delta):
     position.y += 1
+    if should_rotate == true:
+        var angle = calculate_required_angle_in_radians($EffectEndTimer.get_time_left(), $EffectEndTimer.get_wait_time())
+        rotate(angle)
 
 func _process_normal_physics(delta):
     velocity.y += delta * gravity_multiplier
@@ -124,10 +132,16 @@ func add_score(value):
 func spawn_anvil():
     var anvil_scene = preload("res://scenes/anvil.tscn")
     var anvil_instance = anvil_scene.instantiate()
+    anvil_instance.pushAnvilCollided.connect(_on_anvil_instance)
     add_child(anvil_instance)
     anvil_instance.position.x = 0
     anvil_instance.position.y = position.y - 133.7
     print(position.y - 133.7)
+
+var should_rotate : bool = false
+
+func _on_anvil_instance():
+    should_rotate = true
 
 func _on_effect_gathered(affected_player_idx : int):
     # If the player isn't the affected one, skip
@@ -149,6 +163,8 @@ func _enable_effect(effect : Effect.EffectType):
         collision_mask |= collision_layer_obstacle_full
         $EffectEndTimer.wait_time = 1.1
     elif effect == Effect.EffectType.SmashWithBlock:
+        collision_mask &= (~collision_layer_obstacle)
+        collision_mask |= collision_layer_obstacle_full
         spawn_anvil()
         $EffectEndTimer.wait_time = 3.0
     elif effect == Effect.EffectType.TwistMovingDirections:
@@ -166,7 +182,9 @@ func _disable_effect():
         collision_mask &= (~collision_layer_obstacle_full)
         collision_mask |= collision_layer_obstacle
     elif active_effect == Effect.EffectType.SmashWithBlock:
-        pass
+        collision_mask &= (~collision_layer_obstacle_full)
+        collision_mask |= collision_layer_obstacle
+        should_rotate = false
     elif active_effect == Effect.EffectType.TwistMovingDirections:
         horizontal_move_multiplier = -horizontal_move_multiplier
     else:

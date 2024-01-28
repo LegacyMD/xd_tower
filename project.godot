@@ -74,3 +74,4 @@ player1_right={
 2d_physics/layer_4="effect"
 2d_physics/layer_5="obstacle_full"
 2d_physics/layer_6="wall"
+2d_physics/layer_7="anvil"
