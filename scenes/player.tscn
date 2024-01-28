@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_vu3yy"]
 [ext_resource type="SpriteFrames" uid="uid://brtby3gs8upj6" path="res://spirte_animations/player2.tres" id="2_e8ge1"]
-[ext_resource type="AudioStream" uid="uid://cnpteux8jnhqw" path="res://sounds/jump1_short.wav" id="3_xjgyu"]
+[ext_resource type="AudioStream" uid="uid://ctccn2p4ktwqv" path="res://sounds/jump1.wav" id="3_6kmp1"]
 
 [sub_resource type="Animation" id="Animation_twcw3"]
 resource_name = "anvil_hit"
@@ -69,7 +69,7 @@ script = ExtResource("1_vu3yy")
 position = Vector2(-2, -15.5)
 scale = Vector2(0.16, 0.2025)
 sprite_frames = ExtResource("2_e8ge1")
-frame = 20
+frame = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -86,6 +86,6 @@ shape = SubResource("RectangleShape2D_fvmdj")
 one_shot = true
 
 [node name="JumpAudioPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_xjgyu")
+stream = ExtResource("3_6kmp1")
 
 [connection signal="timeout" from="EffectEndTimer" to="." method="_disable_effect"]
