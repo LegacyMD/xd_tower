@@ -2,8 +2,11 @@ extends Node2D
 
 signal platformSpawned(view_name, x_beg, x_end, y_position)
 
-var last_platform_spawn_position : float = 0.0
-var last_platform_spawn_row_idx : int = -2
+var last_platform_spawn_position_1 : float = 0.0
+var last_platform_spawn_row_idx_1 : int = -2
+
+var last_platform_spawn_position_2 : float = 0.0
+var last_platform_spawn_row_idx_2 : int = -2
 
 # Computes size of a platofrm tile in pixels
 func _compute_tile_size(_player_view_rect):
@@ -95,7 +98,7 @@ func _init_platforms(player_view_name, tiles_dimensions, tile_size, player_view_
         _fill_platform_tiles(platform_offset, platform_length, root, tile, r, tile_size, player_view_rect)
 
 
-func _spawn_new_platform(player_view_name):
+func _spawn_new_platform(player_view_name, last_platform_spawn_row_idx):
     var player_view_rect =  get_parent().find_child(player_view_name).background_rect
     var tile_size = _compute_tile_size(player_view_rect)
     var tiles_dimensions = _compute_tile_dimensions(player_view_rect)
@@ -109,9 +112,9 @@ func _spawn_new_platform(player_view_name):
     var platform_length = size_and_offset.platform_length
     var platform_offset = size_and_offset.platform_offset
     _fill_platform_tiles(platform_offset, platform_length, root, tile, r, tile_size, player_view_rect)
-    _emit_spawned_signal(player_view_name)
+    _emit_spawned_signal(player_view_name, last_platform_spawn_row_idx)
 
-func _emit_spawned_signal(player_view_name):
+func _emit_spawned_signal(player_view_name, last_platform_spawn_row_idx):
     var player_view_rect =  get_parent().find_child(player_view_name).background_rect
     var tile_size = _compute_tile_size(player_view_rect)
     var row = last_platform_spawn_row_idx - 1
@@ -121,6 +124,19 @@ func _emit_spawned_signal(player_view_name):
     var x_beg = player_view_rect.position.x
     var x_end = player_view_rect.size.x + player_view_rect.position.x
     emit_signal("platformSpawned", player_view_name, x_beg, x_end, y_position)
+
+func _try_spawning_new_platform(player_view_name, last_platform_spawn_position, last_platform_spawn_row_idx):
+    var player_view = get_parent().find_child(player_view_name)
+    var container = player_view.get_node("PlatformContainer")
+    var container_y = container.position.y
+    var increment = (container.scale.y * Settings.TILE_SIZE) * 2
+    var last_platform_pos_incremented = last_platform_spawn_position + increment
+    if container_y > last_platform_pos_incremented:
+        last_platform_spawn_position += increment
+        _spawn_new_platform(player_view_name, last_platform_spawn_row_idx)
+        return true
+    else:
+        return false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -133,13 +149,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-    var container = get_node("../PlayerView/PlatformContainer")
-    var container_y = container.position.y
-    var increment = (container.scale.y * Settings.TILE_SIZE) * 2
-    var last_platform_pos_incremented = last_platform_spawn_position + increment
-    if container_y > last_platform_pos_incremented:
-        last_platform_spawn_position += increment
-        _spawn_new_platform("PlayerView")
-        _spawn_new_platform("PlayerView2")
-        last_platform_spawn_row_idx -= 2 # Set new row index two tows above
-
+    if _try_spawning_new_platform("PlayerView", last_platform_spawn_position_1, last_platform_spawn_row_idx_1):
+        last_platform_spawn_row_idx_1 -= 2
+    if _try_spawning_new_platform("PlayerView2", last_platform_spawn_position_2, last_platform_spawn_row_idx_2):
+        last_platform_spawn_row_idx_2 -= 2
