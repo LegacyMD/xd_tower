@@ -14,6 +14,22 @@ enum EffectType {
     Slapping
 }
 
+var effect_type : EffectType
+
+func _ready():
+    effect_type = _pick_random_effect()
+    match effect_type:
+        EffectType.Bounce:
+            $AnimatedSprite2D.frame = 1
+        EffectType.SmashWithBlock:
+            $AnimatedSprite2D.frame = 0
+        EffectType.TwistMovingDirections:
+            $AnimatedSprite2D.frame = 2
+        EffectType.Slapping, EffectType.BeingSlapped:
+            $AnimatedSprite2D.frame = 3
+
+   # $AnimatedSprite2D.frame = effect_type * 1 # to cast enum to int I cannot use casting, but I can multiply by 1. WTF XD
+
 func _get_other_player_idx(player_idx: int) -> int:
     return not player_idx
 
@@ -25,7 +41,6 @@ func _on_player_entered(body):
     var enemy_player_idx = _get_other_player_idx(player_idx)
     print("Player %d gathered effect" % player_idx)
 
-    var effect_type = _pick_random_effect()
     if effect_type == EffectType.BeingSlapped:
         effectGathered.emit(player_idx, EffectType.Slapping)
     else:

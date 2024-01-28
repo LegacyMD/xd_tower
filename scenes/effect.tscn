@@ -1,8 +1,46 @@
-[gd_scene load_steps=3 format=3 uid="uid://3r022nher6q4"]
+[gd_scene load_steps=9 format=3 uid="uid://3r022nher6q4"]
 
 [ext_resource type="Script" path="res://scenes/effect.gd" id="1_x2t7n"]
+[ext_resource type="Texture2D" uid="uid://j85q4x1cwoi2" path="res://images/sheet_effects.png" id="2_xkx4o"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8cqti"]
+radius = 29.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mt16o"]
+atlas = ExtResource("2_xkx4o")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mu0xf"]
+atlas = ExtResource("2_xkx4o")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7qexo"]
+atlas = ExtResource("2_xkx4o")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ye5fi"]
+atlas = ExtResource("2_xkx4o")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2gx75"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mt16o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mu0xf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7qexo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ye5fi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="Effect" type="Node2D"]
 script = ExtResource("1_x2t7n")
@@ -13,8 +51,10 @@ collision_layer = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_8cqti")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-color = Color(1, 0, 1, 1)
-polygon = PackedVector2Array(-5, -8, 6, -8, 10, -1, 6, 8, -6, 8, -10, 0)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-9.53674e-07, 0)
+scale = Vector2(0.238281, 0.226935)
+sprite_frames = SubResource("SpriteFrames_2gx75")
+frame = 3
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_player_entered"]
