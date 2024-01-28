@@ -39,5 +39,5 @@ func set_texture(tile_type : TileType):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-    if global_position.y > 1200:
+    if global_position.y > Settings.HORIZONTAL_DELETION_THRESHOLD:
         queue_free()
