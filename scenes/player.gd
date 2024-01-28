@@ -220,7 +220,9 @@ func _on_effect_inflicted(affected_player_idx : int, effect : Effect.EffectType)
 func _enable_effect(effect : Effect.EffectType):
     active_effect = effect
 
-    if effect == Effect.EffectType.Bounce:
+    if effect == Effect.EffectType.None:
+        pass
+    elif effect == Effect.EffectType.Bounce:
         velocity = bounce_velocity_start
         collision_mask &= (~collision_layer_obstacle)
         collision_mask |= collision_layer_obstacle_full
@@ -246,7 +248,9 @@ func _enable_effect(effect : Effect.EffectType):
     $EffectEndTimer.start()
 
 func _disable_effect():
-    if active_effect == Effect.EffectType.Bounce:
+    if active_effect == Effect.EffectType.None:
+        pass
+    elif active_effect == Effect.EffectType.Bounce:
         velocity = velocity.limit_length(horizontal_move_multiplier / 60.0)
         collision_mask &= (~collision_layer_obstacle_full)
         collision_mask |= collision_layer_obstacle

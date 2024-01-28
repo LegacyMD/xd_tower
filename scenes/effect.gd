@@ -34,12 +34,12 @@ func _get_other_player_idx(player_idx: int) -> int:
     return not player_idx
 
 func _pick_random_effect() -> EffectType:
-    return (randi() % (EffectType.size() - 1)) as EffectType
+    return ((randi() % (EffectType.size() - 2)) + 1) as EffectType
 
 func _on_player_entered(body):
     var player_idx = body.player_idx
     var enemy_player_idx = _get_other_player_idx(player_idx)
-    print("Player %d gathered effect" % player_idx)
+    print("Player %d gathered effect %s" % [player_idx, str(effect_type)])
 
     if effect_type == EffectType.BeingSlapped:
         effectGathered.emit(player_idx, EffectType.Slapping)
