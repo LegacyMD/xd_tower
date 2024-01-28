@@ -158,8 +158,12 @@ func _process_normal_physics(delta):
     velocity.x = delta * horizontal_input * horizontal_move_multiplier
 
     if is_on_floor():
-        $AnimationPlayer.stop()
-        $AnimatedSprite2D.frame = 0
+        if velocity.x == 0:
+            $AnimationPlayer.stop()
+            $AnimatedSprite2D.frame = 0
+        else:
+            $AnimationPlayer.play("run")
+            $AnimatedSprite2D.flip_h = velocity.x > 0
 
     # mwk: handle jumping
     if Input.is_action_just_pressed(player_up) and is_on_floor():

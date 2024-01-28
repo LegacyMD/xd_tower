@@ -19,6 +19,7 @@ position = Vector2(0, 0)
 
 [node name="AnimatedSprite2D" parent="PlayerView/Player" index="0"]
 sprite_frames = ExtResource("3_ifc1a")
+frame = 0
 
 [node name="PlayerView2" parent="." instance=ExtResource("1_mew4d")]
 position = Vector2(328, -14)
