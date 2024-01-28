@@ -132,11 +132,10 @@ func _try_spawning_new_platform(player_view_name, last_platform_spawn_position, 
     var increment = (container.scale.y * Settings.TILE_SIZE) * 2
     var last_platform_pos_incremented = last_platform_spawn_position + increment
     if container_y > last_platform_pos_incremented:
-        last_platform_spawn_position += increment
         _spawn_new_platform(player_view_name, last_platform_spawn_row_idx)
-        return true
+        return { success=true, increment=increment}
     else:
-        return false
+        return { success=false, increment=increment}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -149,7 +148,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-    if _try_spawning_new_platform("PlayerView", last_platform_spawn_position_1, last_platform_spawn_row_idx_1):
+    var result = _try_spawning_new_platform("PlayerView", last_platform_spawn_position_1, last_platform_spawn_row_idx_1)
+    if result.success:
         last_platform_spawn_row_idx_1 -= 2
-    if _try_spawning_new_platform("PlayerView2", last_platform_spawn_position_2, last_platform_spawn_row_idx_2):
+        last_platform_spawn_position_1 += result.increment
+
+    result = _try_spawning_new_platform("PlayerView2", last_platform_spawn_position_2, last_platform_spawn_row_idx_2)
+    if result.success:
         last_platform_spawn_row_idx_2 -= 2
+        last_platform_spawn_position_2 += result.increment
