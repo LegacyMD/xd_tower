@@ -110,6 +110,14 @@ func add_score(value):
     score += value
     score_changed.emit(score)
 
+func spawn_anvil():
+    var anvil_scene = preload("res://scenes/anvil.tscn")
+    var anvil_instance = anvil_scene.instantiate()
+    add_child(anvil_instance)
+    anvil_instance.position.x = 0
+    anvil_instance.position.y = position.y - 133.7
+    print(position.y - 133.7)
+
 func _enable_effect(effect : Effect.EffectType):
     active_effect = effect
 
@@ -119,6 +127,7 @@ func _enable_effect(effect : Effect.EffectType):
         collision_mask |= collision_layer_obstacle_full
         $EffectEndTimer.wait_time = 1.1
     elif effect == Effect.EffectType.SmashWithBlock:
+        spawn_anvil()
         $EffectEndTimer.wait_time = 3.0
     elif effect == Effect.EffectType.TwistMovingDirections:
         horizontal_move_multiplier = -horizontal_move_multiplier

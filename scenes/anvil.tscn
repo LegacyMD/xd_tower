@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://tr1pwqhdyt0c"]
+
+[ext_resource type="Texture2D" uid="uid://jh6ccxw6jrgq" path="res://images/player1.png" id="1_mdfes"]
+[ext_resource type="Script" path="res://scenes/anvil.gd" id="1_uo0jx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_unp55"]
+size = Vector2(40, 38)
+
+[node name="Anvil" type="CharacterBody2D"]
+script = ExtResource("1_uo0jx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_unp55")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-9.53674e-07, 2.38419e-06)
+scale = Vector2(0.469136, 0.376238)
+texture = ExtResource("1_mdfes")
