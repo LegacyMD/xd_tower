@@ -48,7 +48,7 @@ func _input(event):
         get_tree().reload_current_scene()
 
 func _ready():
-    pass
+    $BackgroundAudioPlayer.play()
 
 signal push_player_idx(player_idx)
 
