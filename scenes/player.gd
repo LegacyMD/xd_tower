@@ -100,6 +100,7 @@ func _process_normal_physics(delta):
     # mwk: handle jumping
     if Input.is_action_just_pressed(player_up) and is_on_floor():
         $AnimationPlayer.play("jump_start")
+        $JumpAudioPlayer.play()
         velocity.y -= delta * vertical_jump_multiplier
     # mdziuban: handle dropping down
     if Input.is_action_just_pressed(player_down):
