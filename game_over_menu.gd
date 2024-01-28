@@ -29,6 +29,11 @@ func _on_quit_button_pressed():
     get_tree().quit()
 
 func _on_player_push_player_idx(player_idx):
+    var quarter_width = size.x / 4
+    var quarters_count = (1 - player_idx) * 2 + 1
+    var cup_position = quarter_width * quarters_count
+    $VictoryCup.position.x = cup_position
+
     # TEMP
     if Settings.DISABLE_WINNING:
         return
