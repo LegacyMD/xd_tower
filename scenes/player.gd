@@ -43,26 +43,14 @@ signal push_player_idx(player_idx)
 func _on_area_2d_body_entered(_body):
     push_player_idx.emit(player_idx)
 
-# NOTE(mwk): jesus fucking christ I am sorry
-var target_rotation = 0
-var rotation_speed = 4.20
-
 func _process(_delta):
     _check_new_platform()
-
-    # mwk: anvil hit leaves us in rotation != 0 state, usually
-    if should_rotate == false && rotation != 0:
-        var current_rotation = rotation
-        rotation += min(rotation_speed * _delta, abs(target_rotation - current_rotation)) * sign(target_rotation - current_rotation)
-        if abs(rotation - target_rotation) < 0.01: # Threshold to stop rotation
-            rotation = target_rotation
 
     # Debug code to test effects
     if Input.is_action_just_pressed("ui_home"):
         _enable_effect(Effect.EffectType.Bounce)
     elif Input.is_action_just_pressed("ui_end"):
         _enable_effect(Effect.EffectType.SmashWithBlock)
-
 
 func _physics_process(delta):
     if active_effect == Effect.EffectType.Bounce:
@@ -90,9 +78,6 @@ func calculate_required_angle_in_radians(remaining_time: float, total_duration: 
 
 func _process_smash_with_block_effect_physics(delta):
     position.y += 1
-    if should_rotate == true:
-        var angle = calculate_required_angle_in_radians($EffectEndTimer.get_time_left(), $EffectEndTimer.get_wait_time())
-        rotate(angle)
 
 func _process_normal_physics(delta):
     velocity.y += delta * gravity_multiplier
@@ -146,13 +131,10 @@ func spawn_anvil():
     anvil_instance.pushAnvilCollided.connect(_on_anvil_instance)
     add_child(anvil_instance)
     anvil_instance.position.x = 0
-    anvil_instance.position.y = position.y - 133.7
-    print(position.y - 133.7)
-
-var should_rotate : bool = false
+    anvil_instance.position.y = -133.7
 
 func _on_anvil_instance():
-    should_rotate = true
+    $AnimationPlayer.play("anvil_hit")
 
 func _on_effect_gathered(affected_player_idx : int):
     # If the player isn't the affected one, skip
@@ -194,7 +176,8 @@ func _disable_effect():
     elif active_effect == Effect.EffectType.SmashWithBlock:
         collision_mask &= (~collision_layer_obstacle_full)
         collision_mask |= collision_layer_obstacle
-        should_rotate = false
+        $AnimationPlayer.stop()
+        $AnimatedSprite2D.frame = 0
     elif active_effect == Effect.EffectType.TwistMovingDirections:
         horizontal_move_multiplier = -horizontal_move_multiplier
     else:

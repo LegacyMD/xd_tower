@@ -16,6 +16,9 @@ position = Vector2(-276, -14)
 [node name="Background" parent="PlayerView" index="0"]
 position = Vector2(0, 0)
 
+[node name="AnimatedSprite2D" parent="PlayerView/Player" index="0"]
+frame = 0
+
 [node name="PlayerView2" parent="." instance=ExtResource("1_mew4d")]
 position = Vector2(328, -14)
 
@@ -24,6 +27,9 @@ texture = ExtResource("2_3fxt5")
 
 [node name="Player" parent="PlayerView2" index="4"]
 player_idx = 1
+
+[node name="AnimatedSprite2D" parent="PlayerView2/Player" index="0"]
+frame = 0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(24, -14)
